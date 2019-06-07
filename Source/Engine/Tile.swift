@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public enum Tile: Int, Decodable {
+public enum Tile: Int, Codable {
     case floor
     case wall
     case crackWall

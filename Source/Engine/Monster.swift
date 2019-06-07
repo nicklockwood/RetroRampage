@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public enum MonsterState {
+public enum MonsterState: Int, Codable {
     case idle
     case chasing
     case scratching

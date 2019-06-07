@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public struct World {
+public struct World: Codable {
     public let map: Tilemap
     public var monsters: [Monster]
     public var player: Player!

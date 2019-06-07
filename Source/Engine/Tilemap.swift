@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public struct Tilemap: Decodable {
+public struct Tilemap: Codable {
     private let tiles: [Tile]
     public let things: [Thing]
     public let width: Int

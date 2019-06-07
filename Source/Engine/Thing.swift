@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public enum Thing: Int, Decodable {
+public enum Thing: Int, Codable {
     case nothing
     case player
     case monster
