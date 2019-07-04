@@ -27,6 +27,8 @@
 		01D09AFF22A48E990052745A /* Tilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AFE22A48E990052745A /* Tilemap.swift */; };
 		01D09B0122A493A70052745A /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 01D09B0022A493A70052745A /* Map.json */; };
 		01D09B0322A4958E0052745A /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0222A4958E0052745A /* Input.swift */; };
+		01D09B0522A5C9DB0052745A /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0422A5C9DB0052745A /* Ray.swift */; };
+		01D09B0722A6E09B0052745A /* Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0622A6E09A0052745A /* Rotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +78,8 @@
 		01D09AFE22A48E990052745A /* Tilemap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tilemap.swift; sourceTree = "<group>"; };
 		01D09B0022A493A70052745A /* Map.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Map.json; sourceTree = "<group>"; };
 		01D09B0222A4958E0052745A /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
+		01D09B0422A5C9DB0052745A /* Ray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
+		01D09B0622A6E09A0052745A /* Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,8 +141,10 @@
 				01D09AF022A481AB0052745A /* Color.swift */,
 				01D09B0222A4958E0052745A /* Input.swift */,
 				01D09AFA22A485040052745A /* Player.swift */,
+				01D09B0422A5C9DB0052745A /* Ray.swift */,
 				01D09AFC22A4873B0052745A /* Rect.swift */,
 				01ADC63B22B957FD00DC8AAD /* Renderer.swift */,
+				01D09B0622A6E09A0052745A /* Rotation.swift */,
 				012A0C4C22C96E150068E8EF /* Tile.swift */,
 				01D09AFE22A48E990052745A /* Tilemap.swift */,
 				012A0C4E22C96E1F0068E8EF /* Thing.swift */,
@@ -279,11 +285,13 @@
 				012A0C4F22C96E1F0068E8EF /* Thing.swift in Sources */,
 				01D09AF922A484B10052745A /* Vector.swift in Sources */,
 				01D09AF322A482030052745A /* Bitmap.swift in Sources */,
+				01D09B0722A6E09B0052745A /* Rotation.swift in Sources */,
 				01D09AFB22A485040052745A /* Player.swift in Sources */,
 				01ADC64022B9846B00DC8AAD /* World.swift in Sources */,
 				012A0C4D22C96E150068E8EF /* Tile.swift in Sources */,
 				01D09B0322A4958E0052745A /* Input.swift in Sources */,
 				01D09AF122A481AB0052745A /* Color.swift in Sources */,
+				01D09B0522A5C9DB0052745A /* Ray.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
