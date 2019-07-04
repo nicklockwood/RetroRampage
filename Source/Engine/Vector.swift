@@ -16,6 +16,10 @@ public struct Vector {
 }
 
 public extension Vector {
+    var orthogonal: Vector {
+        return Vector(x: -y, y: x)
+    }
+
     var length: Double {
         return (x * x + y * y).squareRoot()
     }

@@ -677,7 +677,7 @@ That's it for Part 2. In this part we...
 * Added collision detection and response so the player doesn't pass through walls
 * Refined the game loop and decoupled world updates from the frame rate
 
-In Part 3 (TBD) we'll take the jump into 3D and learn how to view a 2D maze from a first person perspective.
+In [Part 3](Part3.md) we'll take the jump into 3D and learn how to view a 2D maze from a first person perspective.
 
 <hr>
 

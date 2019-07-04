@@ -1,6 +1,6 @@
 ## Retro Rampage
 
-![Screenshot](Tutorial/Images/Tilemap.png)
+![Screenshot](Tutorial/Images/StraightWalls.png)
 
 ### About
 
@@ -43,6 +43,10 @@ Unlike most apps, games are (or should be) highly independent of any given platf
 [Part 2 - Mazes and Motion](Tutorial/Part2.md)
 
 Wolfenstein 3D - despite the name - is really a 2D game projected into the third dimension. The game mechanics work exactly the same as for a top-down 2D shooter, and to prove that we'll start by building the game from a top-down 2D perspective before we make the shift to first-person 3D.
+
+[Part 3 - Ray Casting](Tutorial/Part3.md)
+
+Long before hardware accelerated 3D graphics, some of the greatest game programmers of our generation were creating incredible 3D worlds armed only with a 16-bit processor. We'll follow in their footsteps and bring our game into the third dimension with an old-school graphics hack called *ray casting*.
 
 More to follow!
 
