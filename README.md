@@ -1,5 +1,7 @@
 ## Retro Rampage
 
+![Screenshot](Tutorial/Images/Tilemap.png)
+
 ### About
 
 Retro Rampage is a tutorial series in which you will learn how to build a Wolfenstein-like game from scratch, in Swift. Initially the game will be targeting iPhone and iPad, but the engine should work on any platform that can run Swift code.
@@ -37,6 +39,10 @@ The tutorials are written with the assumption that you are already familiar with
 [Part 1 - Separation of Concerns](Tutorial/Part1.md)
 
 Unlike most apps, games are (or should be) highly independent of any given platform. Swift has already been ported to many platforms outside of the Apple ecosystem, including Android, Ubuntu, Windows and even Raspberry Pi. In part one we'll see how to set up our project to minimize dependencies with iOS and provide a solid foundation for writing a fully portable game engine.
+
+[Part 2 - Mazes and Motion](Tutorial/Part2.md)
+
+Wolfenstein 3D - despite the name - is really a 2D game projected into the third dimension. The game mechanics work exactly the same as for a top-down 2D shooter, and to prove that we'll start by building the game from a top-down 2D perspective before we make the shift to first-person 3D.
 
 More to follow!
 

@@ -725,7 +725,7 @@ And that's a wrap for Part 1. To recap, in this part we...
 * Created a simple game engine with a moving player avatar
 * Created an iOS platform layer to display the output of the engine
 
-In Part 2 (TBD) we'll make the world a bit more interesting, and implement user input so the player can travel in any direction, not just diagonally.
+In [Part 2](Part2.md) we'll make the world a bit more interesting, and implement user input so the player can travel in any direction, not just diagonally.
 
 <hr>
 

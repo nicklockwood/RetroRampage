@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		012A0C4D22C96E150068E8EF /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0C4C22C96E150068E8EF /* Tile.swift */; };
+		012A0C4F22C96E1F0068E8EF /* Thing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0C4E22C96E1F0068E8EF /* Thing.swift */; };
 		016E41B3228E9A5B00ACF137 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E41B2228E9A5B00ACF137 /* AppDelegate.swift */; };
 		016E41B5228E9A5B00ACF137 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E41B4228E9A5B00ACF137 /* ViewController.swift */; };
 		016E41B8228E9A5B00ACF137 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 016E41B6228E9A5B00ACF137 /* Main.storyboard */; };
@@ -22,6 +24,9 @@
 		01D09AF922A484B10052745A /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AF822A484B10052745A /* Vector.swift */; };
 		01D09AFB22A485040052745A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AFA22A485040052745A /* Player.swift */; };
 		01D09AFD22A4873B0052745A /* Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AFC22A4873B0052745A /* Rect.swift */; };
+		01D09AFF22A48E990052745A /* Tilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AFE22A48E990052745A /* Tilemap.swift */; };
+		01D09B0122A493A70052745A /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 01D09B0022A493A70052745A /* Map.json */; };
+		01D09B0322A4958E0052745A /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0222A4958E0052745A /* Input.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +54,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		012A0C4C22C96E150068E8EF /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+		012A0C4E22C96E1F0068E8EF /* Thing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thing.swift; sourceTree = "<group>"; };
 		016E41AF228E9A5B00ACF137 /* Rampage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rampage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		016E41B2228E9A5B00ACF137 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		016E41B4228E9A5B00ACF137 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +73,9 @@
 		01D09AF822A484B10052745A /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		01D09AFA22A485040052745A /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		01D09AFC22A4873B0052745A /* Rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rect.swift; sourceTree = "<group>"; };
+		01D09AFE22A48E990052745A /* Tilemap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tilemap.swift; sourceTree = "<group>"; };
+		01D09B0022A493A70052745A /* Map.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Map.json; sourceTree = "<group>"; };
+		01D09B0222A4958E0052745A /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +122,7 @@
 				016E41B4228E9A5B00ACF137 /* ViewController.swift */,
 				01D09AF422A482450052745A /* UIImage+Bitmap.swift */,
 				016E41B6228E9A5B00ACF137 /* Main.storyboard */,
+				01D09B0022A493A70052745A /* Map.json */,
 				016E41B9228E9A5E00ACF137 /* Assets.xcassets */,
 				016E41BB228E9A5E00ACF137 /* LaunchScreen.storyboard */,
 				016E41BE228E9A5E00ACF137 /* Info.plist */,
@@ -124,9 +135,13 @@
 			children = (
 				01D09AF222A482030052745A /* Bitmap.swift */,
 				01D09AF022A481AB0052745A /* Color.swift */,
+				01D09B0222A4958E0052745A /* Input.swift */,
 				01D09AFA22A485040052745A /* Player.swift */,
 				01D09AFC22A4873B0052745A /* Rect.swift */,
 				01ADC63B22B957FD00DC8AAD /* Renderer.swift */,
+				012A0C4C22C96E150068E8EF /* Tile.swift */,
+				01D09AFE22A48E990052745A /* Tilemap.swift */,
+				012A0C4E22C96E1F0068E8EF /* Thing.swift */,
 				01D09AF822A484B10052745A /* Vector.swift */,
 				01ADC63F22B9846B00DC8AAD /* World.swift */,
 				016E41CC228E9A8600ACF137 /* Info.plist */,
@@ -229,6 +244,7 @@
 			files = (
 				016E41BD228E9A5E00ACF137 /* LaunchScreen.storyboard in Resources */,
 				016E41BA228E9A5E00ACF137 /* Assets.xcassets in Resources */,
+				01D09B0122A493A70052745A /* Map.json in Resources */,
 				016E41B8228E9A5B00ACF137 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,12 +273,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01D09AFF22A48E990052745A /* Tilemap.swift in Sources */,
 				01D09AFD22A4873B0052745A /* Rect.swift in Sources */,
 				01ADC63C22B957FD00DC8AAD /* Renderer.swift in Sources */,
+				012A0C4F22C96E1F0068E8EF /* Thing.swift in Sources */,
 				01D09AF922A484B10052745A /* Vector.swift in Sources */,
 				01D09AF322A482030052745A /* Bitmap.swift in Sources */,
 				01D09AFB22A485040052745A /* Player.swift in Sources */,
 				01ADC64022B9846B00DC8AAD /* World.swift in Sources */,
+				012A0C4D22C96E150068E8EF /* Tile.swift in Sources */,
+				01D09B0322A4958E0052745A /* Input.swift in Sources */,
 				01D09AF122A481AB0052745A /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
