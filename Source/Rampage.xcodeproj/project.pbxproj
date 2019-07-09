@@ -11,6 +11,8 @@
 		012A0C4F22C96E1F0068E8EF /* Thing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0C4E22C96E1F0068E8EF /* Thing.swift */; };
 		012A0C6222CC200E0068E8EF /* Billboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0C6022CC200D0068E8EF /* Billboard.swift */; };
 		012A0C6322CC200E0068E8EF /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0C6122CC200D0068E8EF /* Monster.swift */; };
+		012A0C9E22D47C220068E8EF /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0C9D22D47C220068E8EF /* Actor.swift */; };
+		012A0CA222D7AD0A0068E8EF /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0CA122D7AD0A0068E8EF /* Animation.swift */; };
 		016E41B3228E9A5B00ACF137 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E41B2228E9A5B00ACF137 /* AppDelegate.swift */; };
 		016E41B5228E9A5B00ACF137 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E41B4228E9A5B00ACF137 /* ViewController.swift */; };
 		016E41B8228E9A5B00ACF137 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 016E41B6228E9A5B00ACF137 /* Main.storyboard */; };
@@ -63,6 +65,8 @@
 		012A0C4E22C96E1F0068E8EF /* Thing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thing.swift; sourceTree = "<group>"; };
 		012A0C6022CC200D0068E8EF /* Billboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Billboard.swift; sourceTree = "<group>"; };
 		012A0C6122CC200D0068E8EF /* Monster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Monster.swift; sourceTree = "<group>"; };
+		012A0C9D22D47C220068E8EF /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
+		012A0CA122D7AD0A0068E8EF /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		016E41AF228E9A5B00ACF137 /* Rampage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rampage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		016E41B2228E9A5B00ACF137 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		016E41B4228E9A5B00ACF137 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +147,8 @@
 		016E41CA228E9A8600ACF137 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				012A0C9D22D47C220068E8EF /* Actor.swift */,
+				012A0CA122D7AD0A0068E8EF /* Animation.swift */,
 				012A0C6022CC200D0068E8EF /* Billboard.swift */,
 				01D09AF222A482030052745A /* Bitmap.swift */,
 				01D09AF022A481AB0052745A /* Color.swift */,
@@ -293,6 +299,7 @@
 				01D09AFF22A48E990052745A /* Tilemap.swift in Sources */,
 				01D09AFD22A4873B0052745A /* Rect.swift in Sources */,
 				01ADC63C22B957FD00DC8AAD /* Renderer.swift in Sources */,
+				012A0C9E22D47C220068E8EF /* Actor.swift in Sources */,
 				012A0C4F22C96E1F0068E8EF /* Thing.swift in Sources */,
 				01D09AF922A484B10052745A /* Vector.swift in Sources */,
 				01D09AF322A482030052745A /* Bitmap.swift in Sources */,
@@ -303,6 +310,7 @@
 				012A0C4D22C96E150068E8EF /* Tile.swift in Sources */,
 				01D09B0322A4958E0052745A /* Input.swift in Sources */,
 				01D09AF122A481AB0052745A /* Color.swift in Sources */,
+				012A0CA222D7AD0A0068E8EF /* Animation.swift in Sources */,
 				01D09B0522A5C9DB0052745A /* Ray.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
