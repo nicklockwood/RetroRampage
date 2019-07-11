@@ -29,6 +29,7 @@
 		01D09B0322A4958E0052745A /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0222A4958E0052745A /* Input.swift */; };
 		01D09B0522A5C9DB0052745A /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0422A5C9DB0052745A /* Ray.swift */; };
 		01D09B0722A6E09B0052745A /* Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0622A6E09A0052745A /* Rotation.swift */; };
+		01D09B0B22A7F7570052745A /* Textures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0A22A7F7570052745A /* Textures.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		01D09B0222A4958E0052745A /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		01D09B0422A5C9DB0052745A /* Ray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
 		01D09B0622A6E09A0052745A /* Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rotation.swift; sourceTree = "<group>"; };
+		01D09B0A22A7F7570052745A /* Textures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Textures.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 				01D09AFC22A4873B0052745A /* Rect.swift */,
 				01ADC63B22B957FD00DC8AAD /* Renderer.swift */,
 				01D09B0622A6E09A0052745A /* Rotation.swift */,
+				01D09B0A22A7F7570052745A /* Textures.swift */,
 				012A0C4C22C96E150068E8EF /* Tile.swift */,
 				01D09AFE22A48E990052745A /* Tilemap.swift */,
 				012A0C4E22C96E1F0068E8EF /* Thing.swift */,
@@ -279,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01D09B0B22A7F7570052745A /* Textures.swift in Sources */,
 				01D09AFF22A48E990052745A /* Tilemap.swift in Sources */,
 				01D09AFD22A4873B0052745A /* Rect.swift in Sources */,
 				01ADC63C22B957FD00DC8AAD /* Renderer.swift in Sources */,

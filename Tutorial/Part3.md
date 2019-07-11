@@ -730,7 +730,7 @@ And that will do for now. To recap, in this part we...
 * Switched to a first-person perspective
 * Added simple lighting
 
-In Part 4 (TBD) we'll redecorate a bit and add some *texture* to our world.
+In [Part 4](Part4.md) we'll redecorate a bit and add some *texture* to our world.
 
 <hr>
 

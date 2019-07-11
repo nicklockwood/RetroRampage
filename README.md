@@ -1,6 +1,6 @@
 ## Retro Rampage
 
-![Screenshot](Tutorial/Images/StraightWalls.png)
+![Screenshot](Tutorial/Images/VariedTextures.png)
 
 ### About
 
@@ -47,6 +47,10 @@ Wolfenstein 3D - despite the name - is really a 2D game projected into the third
 [Part 3 - Ray Casting](Tutorial/Part3.md)
 
 Long before hardware accelerated 3D graphics, some of the greatest game programmers of our generation were creating incredible 3D worlds armed only with a 16-bit processor. We'll follow in their footsteps and bring our game into the third dimension with an old-school graphics hack called *ray casting*.
+
+[Part 4 - Texture Mapping](Tutorial/Part4.md)
+
+In this chapter we'll spruce up the bare walls and floor with *texture mapping*. Texture mapping is the process of painting or *wall-papering* a 3D object with a 2D image, helping to provide the appearance of intricate detail in an otherwise featureless surface.
 
 More to follow!
 
