@@ -27,3 +27,37 @@ More than two decades later, a few things have changed:
 * John Carmack has given us the Wolfenstein source code, and the wizardry behind it has been thoroughly demystified.
 
 I guess now is as good a time as any to scratch that quarter-century itch and build an FPS!
+
+### Tutorials
+
+The tutorials below are designed to be completed in order, and each step builds on the code from the previous one. If you decide to skip ahead, project snapshots for each step are available [here](https://github.com/nicklockwood/RetroRampage/releases).
+
+The tutorials are written with the assumption that you are already familiar with Xcode and are comfortable setting up an iOS project and adding new files to it. No prior knowledge of the Swift language is assumed, so it's fine if you've only used Objective-C or other C-like languages.
+
+[Part 1 - Separation of Concerns](Tutorial/Part1.md)
+
+Unlike most apps, games are (or should be) highly independent of any given platform. Swift has already been ported to many platforms outside of the Apple ecosystem, including Android, Ubuntu, Windows and even Raspberry Pi. In part one we'll see how to set up our project to minimize dependencies with iOS and provide a solid foundation for writing a fully portable game engine.
+
+More to follow!
+
+### Acknowledgments
+
+I'd like to thank [Nat Brown](https://github.com/natbro) and [PJ Cook](https://github.com/pjcook) for their invaluable feedback on the first draft of these tutorials.
+
+Thanks also to [Lode Vandevenne](https://github.com/lvandeve) and [Fabien Sanglard](https://github.com/fabiensanglard/), whom I've never actually spoken to, but whose brilliant explanations of ray casting and the Wolfenstein engine formed both the basis and inspiration for this tutorial series.
+
+### Further Reading
+
+If you've completed the tutorials and are eager to learn more, here are some resources you might find useful:
+
+* [Lode's Raycasting Tutorial](https://lodev.org/cgtutor/raycasting.html#Introduction) - A great tutorial on ray casting, implemented in C++.
+* [Game Engine Black Book: Wolfenstein 3D](https://www.amazon.co.uk/gp/product/1727646703/ref=as_li_tl?ie=UTF8&camp=1634&creative=6738&creativeASIN=1727646703&linkCode=as2&tag=charcoaldesig-21&linkId=aab5d43499c96f7417b7aa0a7b3e587d) - Fabien Sanglard's excellent book about the Wolfenstein 3D game engine.
+* [Swiftenstein](https://github.com/nicklockwood/Swiftenstein) - A more complete but less polished implementation of the ideas covered in this tutorial.
+* [Handmade Hero](https://handmadehero.org) - A video series in which games industry veteran [Casey Muratori](https://github.com/cmuratori) builds a game from scratch in C.
+
+### Tip Jar
+
+I started this tutorial series thinking it would take just a few days. Nearly two months later, with no end in sight, I realize I may have been a bit naive. If you've found it interesting, please consider donating to my caffeine fund.
+
+[![Donate via PayPal](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CR6YX6DLRNJTY&source=url)
+
