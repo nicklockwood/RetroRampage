@@ -8,9 +8,11 @@
 
 public struct Renderer {
     public private(set) var bitmap: Bitmap
+    private let textures: Textures
 
-    public init(width: Int, height: Int) {
+    public init(width: Int, height: Int, textures: Textures) {
         self.bitmap = Bitmap(width: width, height: height, color: .black)
+        self.textures = textures
     }
 }
 
@@ -41,17 +43,40 @@ public extension Renderer {
             let distanceRatio = viewPlaneDistance / focalLength
             let perpendicular = wallDistance / distanceRatio
             let height = wallHeight * focalLength / perpendicular * Double(bitmap.height)
-            let wallColor: Color
+            let wallTexture: Bitmap
+            let wallX: Double
+            let tile = world.map.tile(at: end, from: ray.direction)
             if end.x.rounded(.down) == end.x {
-                wallColor = .white
+                wallTexture = textures[tile.textures[0]]
+                wallX = end.y - end.y.rounded(.down)
             } else {
-                wallColor = .gray
+                wallTexture = textures[tile.textures[1]]
+                wallX = end.x - end.x.rounded(.down)
             }
-            bitmap.drawLine(
-                from: Vector(x: Double(x), y: (Double(bitmap.height) - height) / 2),
-                to: Vector(x: Double(x), y: (Double(bitmap.height) + height) / 2),
-                color: wallColor
-            )
+            let textureX = Int(wallX * Double(wallTexture.width))
+            let wallStart = Vector(x: Double(x), y: (Double(bitmap.height) - height) / 2 + 0.001)
+            bitmap.drawColumn(textureX, of: wallTexture, at: wallStart, height: height)
+
+            // Draw floor and ceiling
+            var floorTile: Tile!
+            var floorTexture, ceilingTexture: Bitmap!
+            let floorStart = Int(wallStart.y + height) + 1
+            for y in min(floorStart, bitmap.height) ..< bitmap.height {
+                let normalizedY = (Double(y) / Double(bitmap.height)) * 2 - 1
+                let perpendicular = wallHeight * focalLength / normalizedY
+                let distance = perpendicular * distanceRatio
+                let mapPosition = ray.origin + ray.direction * distance
+                let tileX = mapPosition.x.rounded(.down), tileY = mapPosition.y.rounded(.down)
+                let tile = world.map[Int(tileX), Int(tileY)]
+                if tile != floorTile {
+                    floorTexture = textures[tile.textures[0]]
+                    ceilingTexture = textures[tile.textures[1]]
+                    floorTile = tile
+                }
+                let textureX = mapPosition.x - tileX, textureY = mapPosition.y - tileY
+                bitmap[x, y] = floorTexture[normalized: textureX, textureY]
+                bitmap[x, bitmap.height - y] = ceilingTexture[normalized: textureX, textureY]
+            }
 
             columnPosition += step
         }

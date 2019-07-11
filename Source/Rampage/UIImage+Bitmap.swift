@@ -40,3 +40,31 @@ extension UIImage {
         self.init(cgImage: cgImage)
     }
 }
+
+extension Bitmap {
+    init?(image: UIImage) {
+        guard let cgImage = image.cgImage else {
+            return nil
+        }
+
+        let alphaInfo = CGImageAlphaInfo.premultipliedLast
+        let bytesPerPixel = MemoryLayout<Color>.size
+        let bytesPerRow = cgImage.width * bytesPerPixel
+
+        var pixels = [Color](repeating: .clear, count: cgImage.width * cgImage.height)
+        guard let context = CGContext(
+            data: &pixels,
+            width: cgImage.width,
+            height: cgImage.height,
+            bitsPerComponent: 8,
+            bytesPerRow: bytesPerRow,
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: alphaInfo.rawValue
+        ) else {
+            return nil
+        }
+
+        context.draw(cgImage, in: CGRect(origin: .zero, size: image.size))
+        self.init(width: cgImage.width, pixels: pixels)
+    }
+}

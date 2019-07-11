@@ -29,6 +29,10 @@ public extension Bitmap {
         }
     }
 
+    subscript(normalized x: Double, y: Double) -> Color {
+        return self[Int(x * Double(width)), Int(y * Double(height))]
+    }
+
     init(width: Int, height: Int, color: Color) {
         self.pixels = Array(repeating: color, count: width * height)
         self.width = width
@@ -59,6 +63,16 @@ public extension Bitmap {
         for _ in 0 ..< stepCount {
             self[Int(point.x), Int(point.y)] = color
             point += step
+        }
+    }
+
+    mutating func drawColumn(_ sourceX: Int, of source: Bitmap, at point: Vector, height: Double) {
+        let start = Int(point.y), end = Int(point.y + height) + 1
+        let stepY = Double(source.height) / height
+        for y in max(0, start) ..< min(self.height, end) {
+            let sourceY = (Double(y) - point.y) * stepY
+            let sourceColor = source[sourceX, Int(sourceY)]
+            self[Int(point.x), y] = sourceColor
         }
     }
 }
