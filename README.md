@@ -1,6 +1,6 @@
 ## Retro Rampage
 
-![Screenshot](Tutorial/Images/VariedTextures.png)
+![Screenshot](Tutorial/Images/SortedSprites.png)
 
 ### About
 
@@ -51,6 +51,10 @@ Long before hardware accelerated 3D graphics, some of the greatest game programm
 [Part 4 - Texture Mapping](Tutorial/Part4.md)
 
 In this chapter we'll spruce up the bare walls and floor with *texture mapping*. Texture mapping is the process of painting or *wall-papering* a 3D object with a 2D image, helping to provide the appearance of intricate detail in an otherwise featureless surface.
+
+[Part 5 - Sprites](Tutorial/Part5.md)
+
+It's time to introduce some other characters to keep our player company, and display them using *sprites* - a popular technique used to add engaging content to 3D games in the days before it was possible to render textured polygonal models in real-time with sufficient detail.
 
 More to follow!
 
