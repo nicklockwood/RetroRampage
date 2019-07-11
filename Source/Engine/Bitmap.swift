@@ -72,7 +72,17 @@ public extension Bitmap {
         for y in max(0, start) ..< min(self.height, end) {
             let sourceY = (Double(y) - point.y) * stepY
             let sourceColor = source[sourceX, Int(sourceY)]
-            self[Int(point.x), y] = sourceColor
+            blendPixel(at: Int(point.x), y, with: sourceColor)
         }
+    }
+
+    mutating func blendPixel(at x: Int, _ y: Int, with newColor: Color) {
+        let oldColor = self[x, y]
+        let inverseAlpha = 1 - Double(newColor.a) / 255
+        self[x, y] = Color(
+            r: UInt8(Double(oldColor.r) * inverseAlpha) + newColor.r,
+            g: UInt8(Double(oldColor.g) * inverseAlpha) + newColor.g,
+            b: UInt8(Double(oldColor.b) * inverseAlpha) + newColor.b
+        )
     }
 }

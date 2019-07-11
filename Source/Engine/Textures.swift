@@ -13,6 +13,7 @@ public enum Texture: String, CaseIterable {
     case floor
     case crackFloor
     case ceiling
+    case monster
 }
 
 public struct Textures {
