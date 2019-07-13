@@ -56,7 +56,7 @@ class ViewController: UIViewController {
         
         let rotation = rightInputVector.x * world.player.turningSpeed * worldTimeStep
         let input = Input(
-            speed: -leftInputVector.y,
+            speed: leftInputVector.orthogonal,
             rotation: Rotation(sine: sin(rotation), cosine: cos(rotation))
         )
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)

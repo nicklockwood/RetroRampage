@@ -7,10 +7,10 @@
 //
 
 public struct Input {
-    public var speed: Double
+    public var speed: Vector
     public var rotation: Rotation
 
-    public init(speed: Double, rotation: Rotation) {
+    public init(speed: Vector, rotation: Rotation) {
         self.speed = speed
         self.rotation = rotation
     }

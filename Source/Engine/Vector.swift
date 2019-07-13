@@ -23,6 +23,10 @@ public extension Vector {
     var length: Double {
         return (x * x + y * y).squareRoot()
     }
+    
+    var sum: Double {
+        return x + y
+    }
 
     static func + (lhs: Vector, rhs: Vector) -> Vector {
         return Vector(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
@@ -30,6 +34,10 @@ public extension Vector {
 
     static func - (lhs: Vector, rhs: Vector) -> Vector {
         return Vector(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+    }
+    
+    static func * (lhs: Vector, rhs: Vector) -> Vector {
+        return Vector(x: lhs.x * rhs.x, y: lhs.y * rhs.y)
     }
 
     static func * (lhs: Vector, rhs: Double) -> Vector {
@@ -70,5 +78,10 @@ public extension Vector {
 
     static prefix func - (rhs: Vector) -> Vector {
         return Vector(x: -rhs.x, y: -rhs.y)
+    }
+    
+    func cosine(to vector: Vector) -> Double {
+        guard self.length > 0 && vector.length > 0 else { return 1 }
+        return (self * vector).sum / (self.length * vector.length)
     }
 }
