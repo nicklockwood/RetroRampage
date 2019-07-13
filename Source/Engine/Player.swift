@@ -72,7 +72,9 @@ public extension Player {
     mutating func update(with input: Input, in world: inout World) {
         let wasMoving = isMoving
         direction = direction.rotated(by: input.rotation)
-        velocity = direction * input.speed * speed
+        let forwardVelocity = direction * (input.speed.y * speed)
+        let strafingVelocity = direction.orthogonal * (input.speed.x * speed)
+        velocity = forwardVelocity + strafingVelocity
         if input.isFiring, canFire {
             state = .firing
             ammo -= 1

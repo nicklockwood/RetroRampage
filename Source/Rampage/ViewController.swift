@@ -100,7 +100,7 @@ class ViewController: UIViewController {
         let rightInputVector = contentView.rightJoystickInputVector
         let rotation = rightInputVector.x * game.world.player.turningSpeed * worldTimeStep
         var input = Input(
-            speed: -leftInputVector.y,
+            speed: Vector(x: leftInputVector.x, y: -leftInputVector.y),
             rotation: Rotation(sine: sin(rotation), cosine: cos(rotation)),
             isFiring: lastFiredTime > lastFrameTime
         )
