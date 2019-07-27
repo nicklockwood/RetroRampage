@@ -10,11 +10,13 @@ public struct Billboard {
     public var start: Vector
     public var direction: Vector
     public var length: Double
+    public var texture: Texture
 
-    public init(start: Vector, direction: Vector, length: Double) {
+    public init(start: Vector, direction: Vector, length: Double, texture: Texture) {
         self.start = start
         self.direction = direction
         self.length = length
+        self.texture = texture
     }
 }
 

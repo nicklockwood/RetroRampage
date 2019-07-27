@@ -100,7 +100,7 @@ public extension Renderer {
                 let perpendicular = spriteDistance / distanceRatio
                 let height = wallHeight / perpendicular * Double(bitmap.height)
                 let spriteX = (hit - sprite.start).length / sprite.length
-                let spriteTexture = textures[.monster]
+                let spriteTexture = textures[sprite.texture]
                 let textureX = min(Int(spriteX * Double(spriteTexture.width)), spriteTexture.width - 1)
                 let start = Vector(x: Double(x), y: (Double(bitmap.height) - height) / 2 + 0.001)
                 bitmap.drawColumn(textureX, of: spriteTexture, at: start, height: height)
