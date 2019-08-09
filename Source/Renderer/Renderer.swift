@@ -12,11 +12,16 @@ private let fizzle = (0 ..< 10000).shuffled()
 
 public struct Renderer {
     public private(set) var bitmap: Bitmap
+    private let width: Int
+    private let range: Range<Double>
     private let textures: Textures
     public var safeArea: Rect
 
-    public init(width: Int, height: Int, textures: Textures) {
-        self.bitmap = Bitmap(width: width, height: height, color: .black)
+    public init(width: Int, height: Int, range: Range<Double>, textures: Textures) {
+        self.width = width
+        self.range = range
+        let columns = Int(Double(width) * (range.upperBound - range.lowerBound))
+        self.bitmap = Bitmap(width: columns, height: height, color: .clear)
         self.textures = textures
         self.safeArea = Rect(min: Vector(x: 0, y: 0), max: bitmap.size)
     }
@@ -25,16 +30,15 @@ public struct Renderer {
 public extension Renderer {
     mutating func draw(_ world: World) {
         let focalLength = 1.0
-        let viewWidth = Double(bitmap.width) / Double(bitmap.height)
+        let viewWidth = Double(width) / Double(bitmap.height)
         let viewPlane = world.player.direction.orthogonal * viewWidth
         let viewCenter = world.player.position + world.player.direction * focalLength
-        let viewStart = viewCenter - viewPlane / 2
+        let viewStart = viewCenter - viewPlane * (0.5 - range.lowerBound)
 
         // Cast rays
-        let columns = bitmap.width
-        let step = viewPlane / Double(columns)
+        let step = viewPlane / Double(width)
         var columnPosition = viewStart
-        for x in 0 ..< columns {
+        for x in 0 ..< bitmap.width {
             let rayDirection = columnPosition - world.player.position
             let viewPlaneDistance = rayDirection.length
             let ray = Ray(
@@ -132,7 +136,7 @@ public extension Renderer {
         let weaponWidth = screenHeight * aspectRatio
         bitmap.drawImage(
             weaponTexture,
-            at: Vector(x: Double(bitmap.width) / 2 - weaponWidth / 2, y: 0),
+            at: Vector(x: Double(width) * (0.5 - range.lowerBound) - weaponWidth / 2, y: 0),
             size: Vector(x: weaponWidth, y: screenHeight)
         )
 
@@ -140,56 +144,65 @@ public extension Renderer {
         let crosshair = textures[.crosshair]
         let hudScale = bitmap.size.y / 64
         let crosshairSize = crosshair.size * hudScale
-        bitmap.drawImage(crosshair, at: (bitmap.size - crosshairSize) / 2, size: crosshairSize)
+        bitmap.drawImage(
+            crosshair,
+            at: Vector(x: Double(width) * (0.5 - range.lowerBound) - crosshairSize.x / 2,
+                       y: (bitmap.size.y - crosshairSize.y) / 2),
+            size: crosshairSize)
 
-        // Health icon
-        let healthIcon = textures[.healthIcon]
-        var offset = safeArea.min + Vector(x: 1, y: 1) * hudScale
-        bitmap.drawImage(healthIcon, at: offset, size: healthIcon.size * hudScale)
-        offset.x += healthIcon.size.x * hudScale
-
-        // Health
         let font = textures[.font]
         let charSize = Vector(x: font.size.x / 10, y: font.size.y)
-        let health = Int(max(0, world.player.health))
-        let healthTint: Color
-        switch health {
-        case ...10:
-            healthTint = .red
-        case 10 ... 30:
-            healthTint = .yellow
-        default:
-            healthTint = .green
-        }
-        for char in String(health) {
-            let index = Int(char.asciiValue!) - 48
-            let step = Int(charSize.x)
-            let xRange = index * step ..< (index + 1) * step
-            bitmap.drawImage(
-                font,
-                xRange: xRange,
-                at: offset,
-                size: charSize * hudScale,
-                tint: healthTint
-            )
-            offset.x += charSize.x * hudScale
+        var offset = safeArea.min + Vector(x: 1, y: 1) * hudScale
+
+        if range.lowerBound == 0 {
+            // Health icon
+            let healthIcon = textures[.healthIcon]
+            bitmap.drawImage(healthIcon, at: offset, size: healthIcon.size * hudScale)
+            offset.x += healthIcon.size.x * hudScale
+
+            // Health
+            let health = Int(max(0, world.player.health))
+            let healthTint: Color
+            switch health {
+            case ...10:
+                healthTint = .red
+            case 10 ... 30:
+                healthTint = .yellow
+            default:
+                healthTint = .green
+            }
+            for char in String(health) {
+                let index = Int(char.asciiValue!) - 48
+                let step = Int(charSize.x)
+                let xRange = index * step ..< (index + 1) * step
+                bitmap.drawImage(
+                    font,
+                    xRange: xRange,
+                    at: offset,
+                    size: charSize * hudScale,
+                    tint: healthTint
+                )
+                offset.x += charSize.x * hudScale
+            }
         }
 
-        // Ammunition
-        offset.x = safeArea.max.x
-        let ammo = Int(max(0, min(99, world.player.ammo)))
-        for char in String(ammo).reversed() {
-            let index = Int(char.asciiValue!) - 48
-            let step = Int(charSize.x)
-            let xRange = index * step ..< (index + 1) * step
-            offset.x -= charSize.x * hudScale
-            bitmap.drawImage(font, xRange: xRange, at: offset, size: charSize * hudScale)
-        }
+        if range.upperBound == 1 {
+            // Ammunition
+            offset.x = safeArea.max.x - range.lowerBound * Double(width)
+            let ammo = Int(max(0, min(99, world.player.ammo)))
+            for char in String(ammo).reversed() {
+                let index = Int(char.asciiValue!) - 48
+                let step = Int(charSize.x)
+                let xRange = index * step ..< (index + 1) * step
+                offset.x -= charSize.x * hudScale
+                bitmap.drawImage(font, xRange: xRange, at: offset, size: charSize * hudScale)
+            }
 
-        // Weapon icon
-        let weaponIcon = textures[world.player.weapon.attributes.hudIcon]
-        offset.x -= weaponIcon.size.x * hudScale
-        bitmap.drawImage(weaponIcon, at: offset, size: weaponIcon.size * hudScale)
+            // Weapon icon
+            let weaponIcon = textures[world.player.weapon.attributes.hudIcon]
+            offset.x -= weaponIcon.size.x * hudScale
+            bitmap.drawImage(weaponIcon, at: offset, size: weaponIcon.size * hudScale)
+        }
 
         // Effects
         for effect in world.effects {
