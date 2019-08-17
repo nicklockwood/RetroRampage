@@ -8,12 +8,14 @@
 
 public struct World {
     public let map: Tilemap
+    public private(set) var doors: [Door]
     public private(set) var monsters: [Monster]
     public private(set) var player: Player!
     public private(set) var effects: [Effect]
 
     public init(map: Tilemap) {
         self.map = map
+        self.doors = []
         self.monsters = []
         self.effects = []
         reset()
@@ -58,6 +60,14 @@ public extension World {
             monsters[i] = monster
         }
 
+        // Update doors
+        for i in 0 ..< doors.count {
+            var door = doors[i]
+            door.time += timeStep
+            door.update(in: &self)
+            doors[i] = door
+        }
+
         // Handle collisions
         for i in 0 ..< monsters.count {
             var monster = monsters[i]
@@ -71,19 +81,15 @@ public extension World {
                     monsters[j].position += intersection / 2
                 }
             }
-            while let intersection = monster.intersection(with: map) {
-                monster.position -= intersection
-            }
+            monster.avoidWalls(in: self)
             monsters[i] = monster
         }
-        while let intersection = player.intersection(with: map) {
-            player.position -= intersection
-        }
+        player.avoidWalls(in: self)
     }
 
     var sprites: [Billboard] {
         let ray = Ray(origin: player.position, direction: player.direction)
-        return monsters.map { $0.billboard(for: ray) }
+        return monsters.map { $0.billboard(for: ray) } + doors.map { $0.billboard }
     }
 
     mutating func hurtPlayer(_ damage: Double) {
@@ -118,6 +124,7 @@ public extension World {
 
     mutating func reset() {
         self.monsters = []
+        self.doors = []
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
                 let position = Vector(x: Double(x) + 0.5, y: Double(y) + 0.5)
@@ -129,13 +136,34 @@ public extension World {
                     self.player = Player(position: position)
                 case .monster:
                     monsters.append(Monster(position: position))
+                case .door:
+                    precondition(y > 0 && y < map.height, "Door cannot be placed on map edge")
+                    let isVertical = map[x, y - 1].isWall && map[x, y + 1].isWall
+                    doors.append(Door(position: position, isVertical: isVertical))
                 }
             }
         }
     }
 
-    func hitTest(_ ray: Ray) -> Int? {
-        let wallHit = map.hitTest(ray)
+    func hitTest(_ ray: Ray) -> Vector {
+        var wallHit = map.hitTest(ray)
+        var distance = (wallHit - ray.origin).length
+        for door in doors {
+            guard let hit = door.billboard.hitTest(ray) else {
+                continue
+            }
+            let hitDistance = (hit - ray.origin).length
+            guard hitDistance < distance else {
+                continue
+            }
+            wallHit = hit
+            distance = hitDistance
+        }
+        return wallHit
+    }
+
+    func pickMonster(_ ray: Ray) -> Int? {
+        let wallHit = hitTest(ray)
         var distance = (wallHit - ray.origin).length
         var result: Int? = nil
         for i in monsters.indices {
@@ -150,5 +178,9 @@ public extension World {
             distance = hitDistance
         }
         return result
+    }
+
+    func isDoor(at x: Int, _ y: Int) -> Bool {
+        return map.things[y * map.width + x] == .door
     }
 }

@@ -84,7 +84,7 @@ public extension Monster {
         let direction = world.player.position - position
         let playerDistance = direction.length
         let ray = Ray(origin: position, direction: direction / playerDistance)
-        let wallHit = world.map.hitTest(ray)
+        let wallHit = world.hitTest(ray)
         let wallDistance = (wallHit - position).length
         return wallDistance > playerDistance
     }

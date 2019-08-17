@@ -25,7 +25,7 @@ public extension Tilemap {
         return tiles[y * width + x]
     }
 
-    func tile(at position: Vector, from direction: Vector) -> Tile {
+    func tileCoords(at position: Vector, from direction: Vector) -> (x: Int, y: Int) {
         var offsetX = 0, offsetY = 0
         if position.x.rounded(.down) == position.x {
             offsetX = direction.x > 0 ? 0 : -1
@@ -33,7 +33,12 @@ public extension Tilemap {
         if position.y.rounded(.down) == position.y {
             offsetY = direction.y > 0 ? 0 : -1
         }
-        return self[Int(position.x) + offsetX, Int(position.y) + offsetY]
+        return (x: Int(position.x) + offsetX, y: Int(position.y) + offsetY)
+    }
+
+    func tile(at position: Vector, from direction: Vector) -> Tile {
+        let (x, y) = tileCoords(at: position, from: direction)
+        return self[x, y]
     }
 
     func hitTest(_ ray: Ray) -> Vector {

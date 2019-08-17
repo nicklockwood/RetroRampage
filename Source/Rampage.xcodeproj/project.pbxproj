@@ -37,6 +37,7 @@
 		01D09B0722A6E09B0052745A /* Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0622A6E09A0052745A /* Rotation.swift */; };
 		01D09B0B22A7F7570052745A /* Textures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0A22A7F7570052745A /* Textures.swift */; };
 		01D0F5D922F80E1600682CA1 /* RampageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F5D822F80E1600682CA1 /* RampageTests.swift */; };
+		01D0F5F122FF095E00682CA1 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F5F022FF095E00682CA1 /* Door.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		01D0F5D622F80E1600682CA1 /* RampageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RampageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D0F5D822F80E1600682CA1 /* RampageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RampageTests.swift; sourceTree = "<group>"; };
 		01D0F5DA22F80E1600682CA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01D0F5F022FF095E00682CA1 /* Door.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Door.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 				012A0C6022CC200D0068E8EF /* Billboard.swift */,
 				01D09AF222A482030052745A /* Bitmap.swift */,
 				01D09AF022A481AB0052745A /* Color.swift */,
+				01D0F5F022FF095E00682CA1 /* Door.swift */,
 				01467C3D22E6F54600B5607D /* Easing.swift */,
 				012DF10722E251CF00D52706 /* Effect.swift */,
 				01D09B0222A4958E0052745A /* Input.swift */,
@@ -375,6 +378,7 @@
 				012A0C6222CC200E0068E8EF /* Billboard.swift in Sources */,
 				01ADC64022B9846B00DC8AAD /* World.swift in Sources */,
 				012A0C4D22C96E150068E8EF /* Tile.swift in Sources */,
+				01D0F5F122FF095E00682CA1 /* Door.swift in Sources */,
 				01D09B0322A4958E0052745A /* Input.swift in Sources */,
 				01D09AF122A481AB0052745A /* Color.swift in Sources */,
 				012A0CA222D7AD0A0068E8EF /* Animation.swift in Sources */,

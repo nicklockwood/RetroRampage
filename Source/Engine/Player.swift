@@ -52,7 +52,7 @@ public extension Player {
             state = .firing
             animation = .pistolFire
             let ray = Ray(origin: position, direction: direction)
-            if let index = world.hitTest(ray) {
+            if let index = world.pickMonster(ray) {
                 world.hurtMonster(at: index, damage: 10)
             }
         }
