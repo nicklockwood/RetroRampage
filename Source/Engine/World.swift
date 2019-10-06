@@ -7,8 +7,9 @@
 //
 
 public struct World {
-    public let map: Tilemap
+    public private(set) var map: Tilemap
     public private(set) var doors: [Door]
+    public private(set) var pushwalls: [Pushwall]
     public private(set) var monsters: [Monster]
     public private(set) var player: Player!
     public private(set) var effects: [Effect]
@@ -16,6 +17,7 @@ public struct World {
     public init(map: Tilemap) {
         self.map = map
         self.doors = []
+        self.pushwalls = []
         self.monsters = []
         self.effects = []
         reset()
@@ -68,6 +70,14 @@ public extension World {
             doors[i] = door
         }
 
+        // Update pushwalls
+        for i in 0 ..< pushwalls.count {
+            var pushwall = pushwalls[i]
+            pushwall.update(in: &self)
+            pushwall.position += pushwall.velocity * timeStep
+            pushwalls[i] = pushwall
+        }
+
         // Handle collisions
         for i in 0 ..< monsters.count {
             var monster = monsters[i]
@@ -85,11 +95,20 @@ public extension World {
             monsters[i] = monster
         }
         player.avoidWalls(in: self)
+
+        // Check for stuck actors
+        if player.isStuck(in: self) {
+            hurtPlayer(1)
+        }
+        for i in 0 ..< monsters.count where monsters[i].isStuck(in: self) {
+            hurtMonster(at: i, damage: 1)
+        }
     }
 
     var sprites: [Billboard] {
         let ray = Ray(origin: player.position, direction: player.direction)
         return monsters.map { $0.billboard(for: ray) } + doors.map { $0.billboard }
+            + pushwalls.flatMap { $0.billboards(facing: player.position) }
     }
 
     mutating func hurtPlayer(_ damage: Double) {
@@ -125,6 +144,7 @@ public extension World {
     mutating func reset() {
         self.monsters = []
         self.doors = []
+        var pushwallCount = 0
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
                 let position = Vector(x: Double(x) + 0.5, y: Double(y) + 0.5)
@@ -140,6 +160,20 @@ public extension World {
                     precondition(y > 0 && y < map.height, "Door cannot be placed on map edge")
                     let isVertical = map[x, y - 1].isWall && map[x, y + 1].isWall
                     doors.append(Door(position: position, isVertical: isVertical))
+                case .pushwall:
+                    pushwallCount += 1
+                    if pushwalls.count >= pushwallCount {
+                        let tile = pushwalls[pushwallCount - 1].tile
+                        pushwalls[pushwallCount - 1] = Pushwall(position: position, tile: tile)
+                        break
+                    }
+                    var tile = map[x, y]
+                    if tile.isWall {
+                        map[x, y] = .floor
+                    } else {
+                        tile = map.closestFloorTile(to: x, y) ?? .wall
+                    }
+                    pushwalls.append(Pushwall(position: position, tile: tile))
                 }
             }
         }
@@ -148,8 +182,10 @@ public extension World {
     func hitTest(_ ray: Ray) -> Vector {
         var wallHit = map.hitTest(ray)
         var distance = (wallHit - ray.origin).length
-        for door in doors {
-            guard let hit = door.billboard.hitTest(ray) else {
+        let billboards = doors.map { $0.billboard } +
+            pushwalls.flatMap { $0.billboards(facing: ray.origin) }
+        for billboard in billboards {
+            guard let hit = billboard.hitTest(ray) else {
                 continue
             }
             let hitDistance = (hit - ray.origin).length
