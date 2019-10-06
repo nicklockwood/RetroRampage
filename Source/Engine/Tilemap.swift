@@ -7,7 +7,7 @@
 //
 
 public struct Tilemap: Decodable {
-    private let tiles: [Tile]
+    private(set) var tiles: [Tile]
     public let things: [Thing]
     public let width: Int
 }
@@ -22,7 +22,8 @@ public extension Tilemap {
     }
 
     subscript(x: Int, y: Int) -> Tile {
-        return tiles[y * width + x]
+        get { return tiles[y * width + x] }
+        set { tiles[y * width + x] = newValue }
     }
 
     func tileCoords(at position: Vector, from direction: Vector) -> (x: Int, y: Int) {
@@ -39,6 +40,18 @@ public extension Tilemap {
     func tile(at position: Vector, from direction: Vector) -> Tile {
         let (x, y) = tileCoords(at: position, from: direction)
         return self[x, y]
+    }
+
+    func closestFloorTile(to x: Int, _ y: Int) -> Tile? {
+        for y in max(0, y - 1) ... min(height - 1, y + 1) {
+            for x in max(0, x - 1) ... min(width - 1, x + 1) {
+                let tile = self[x, y]
+                if tile.isWall == false {
+                    return tile
+                }
+            }
+        }
+        return nil
     }
 
     func hitTest(_ ray: Ray) -> Vector {

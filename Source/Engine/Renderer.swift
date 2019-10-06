@@ -26,16 +26,6 @@ public extension Renderer {
         let viewCenter = world.player.position + world.player.direction * focalLength
         let viewStart = viewCenter - viewPlane / 2
 
-        // Sort sprites by distance
-        var spritesByDistance: [(distance: Double, sprite: Billboard)] = []
-        for sprite in world.sprites {
-            let spriteDistance = (sprite.start - world.player.position).length
-            spritesByDistance.append(
-                (distance: spriteDistance, sprite: sprite)
-            )
-        }
-        spritesByDistance.sort(by: { $0.distance > $1.distance })
-
         // Cast rays
         let columns = bitmap.width
         let step = viewPlane / Double(columns)
@@ -95,8 +85,9 @@ public extension Renderer {
                 bitmap[x, bitmap.height - 1 - y] = ceilingTexture[normalized: textureX, textureY]
             }
 
-            // Draw sprites
-            for (_, sprite) in spritesByDistance {
+            // Sort sprites by distance
+            var spritesByDistance: [(hit: Vector, distance: Double, sprite: Billboard)] = []
+            for sprite in world.sprites {
                 guard let hit = sprite.hitTest(ray) else {
                     continue
                 }
@@ -104,6 +95,14 @@ public extension Renderer {
                 if spriteDistance > wallDistance {
                     continue
                 }
+                spritesByDistance.append(
+                    (hit: hit, distance: spriteDistance, sprite: sprite)
+                )
+            }
+            spritesByDistance.sort(by: { $0.distance > $1.distance })
+
+            // Draw sprites
+            for (hit, spriteDistance, sprite) in spritesByDistance {
                 let perpendicular = spriteDistance / distanceRatio
                 let height = wallHeight / perpendicular * Double(bitmap.height)
                 let spriteX = (hit - sprite.start).length / sprite.length
