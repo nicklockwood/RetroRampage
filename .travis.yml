@@ -1,0 +1,7 @@
+language: swift
+osx_image: xcode11.4
+
+script:
+  - cd Source
+  - xcodebuild clean build -scheme Rampage -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.4'
+  - xcodebuild clean test -scheme Rampage -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.4'
