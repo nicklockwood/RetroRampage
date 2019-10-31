@@ -14,43 +14,24 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "016E41AE228E9A5B00ACF137"
-               BuildableName = "Rampage.app"
-               BlueprintName = "Rampage"
+               BlueprintIdentifier = "013712ED23FC749E0096261D"
+               BuildableName = "Renderer.framework"
+               BlueprintName = "Renderer"
                ReferencedContainer = "container:Rampage.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "016E41AE228E9A5B00ACF137"
-            BuildableName = "Rampage.app"
-            BlueprintName = "Rampage"
-            ReferencedContainer = "container:Rampage.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "01D0F5D522F80E1600682CA1"
-               BuildableName = "RampageTests.xctest"
-               BlueprintName = "RampageTests"
-               ReferencedContainer = "container:Rampage.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -59,16 +40,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "016E41AE228E9A5B00ACF137"
-            BuildableName = "Rampage.app"
-            BlueprintName = "Rampage"
-            ReferencedContainer = "container:Rampage.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -76,16 +47,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "016E41AE228E9A5B00ACF137"
-            BuildableName = "Rampage.app"
-            BlueprintName = "Rampage"
+            BlueprintIdentifier = "013712ED23FC749E0096261D"
+            BuildableName = "Renderer.framework"
+            BlueprintName = "Renderer"
             ReferencedContainer = "container:Rampage.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

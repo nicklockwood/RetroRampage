@@ -23,7 +23,9 @@ public class SoundManager: NSObject, AVAudioPlayerDelegate {
 
 public extension SoundManager {
     func activate() throws {
+        #if os(iOS)
         try AVAudioSession.sharedInstance().setActive(true)
+        #endif
     }
 
     func preload(_ url: URL, channel: Int? = nil) throws -> AVAudioPlayer {
