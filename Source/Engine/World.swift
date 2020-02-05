@@ -8,6 +8,7 @@
 
 public enum WorldAction {
     case loadLevel(Int)
+    case playSounds([Sound])
 }
 
 public struct World {
@@ -19,6 +20,7 @@ public struct World {
     public private(set) var player: Player!
     public private(set) var effects: [Effect]
     public private(set) var isLevelEnded: Bool
+    private var sounds: [Sound] = []
 
     public init(map: Tilemap) {
         self.map = map
@@ -130,7 +132,9 @@ public extension World {
             hurtMonster(at: i, damage: 1)
         }
 
-        return nil
+        // Play sounds
+        defer { sounds.removeAll() }
+        return .playSounds(sounds)
     }
 
     var sprites: [Billboard] {
@@ -149,6 +153,10 @@ public extension World {
         effects.append(Effect(type: .fadeIn, color: color, duration: 0.2))
         if player.isDead {
             effects.append(Effect(type: .fizzleOut, color: .red, duration: 2))
+            playSound(.playerDeath, at: player.position)
+            if player.isStuck(in: self) {
+                playSound(.squelch, at: player.position)
+            }
         }
     }
 
@@ -162,11 +170,32 @@ public extension World {
         if monster.isDead {
             monster.state = .dead
             monster.animation = .monsterDeath
+            playSound(.monsterDeath, at: monster.position)
+            if monster.isStuck(in: self) {
+                playSound(.squelch, at: monster.position)
+            }
         } else {
             monster.state = .hurt
             monster.animation = .monsterHurt
         }
         monsters[index] = monster
+    }
+
+    mutating func playSound(_ name: SoundName?, at position: Vector, in channel: Int? = nil) {
+        let delta = position - player.position
+        let distance = delta.length
+        let dropOff = 0.5
+        let volume = 1 / (distance * distance * dropOff + 1)
+        let delay = distance * 2 / 343
+        let direction = distance > 0 ? delta / distance : player.direction
+        let pan = player.direction.orthogonal.dot(direction)
+        sounds.append(Sound(
+            name: name,
+            channel: channel,
+            volume: volume,
+            pan: pan,
+            delay: delay
+        ))
     }
 
     mutating func endLevel() {
@@ -186,6 +215,7 @@ public extension World {
         self.switches = []
         self.isLevelEnded = false
         var pushwallCount = 0
+        var soundChannel = 0
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
                 let position = Vector(x: Double(x) + 0.5, y: Double(y) + 0.5)
@@ -194,7 +224,8 @@ public extension World {
                 case .nothing:
                     break
                 case .player:
-                    self.player = Player(position: position)
+                    self.player = Player(position: position, soundChannel: soundChannel)
+                    soundChannel += 1
                 case .monster:
                     monsters.append(Monster(position: position))
                 case .door:
@@ -205,7 +236,12 @@ public extension World {
                     pushwallCount += 1
                     if pushwalls.count >= pushwallCount {
                         let tile = pushwalls[pushwallCount - 1].tile
-                        pushwalls[pushwallCount - 1] = Pushwall(position: position, tile: tile)
+                        pushwalls[pushwallCount - 1] = Pushwall(
+                            position: position,
+                            tile: tile,
+                            soundChannel: soundChannel
+                        )
+                        soundChannel += 1
                         break
                     }
                     var tile = map[x, y]
@@ -214,7 +250,12 @@ public extension World {
                     } else {
                         tile = .wall
                     }
-                    pushwalls.append(Pushwall(position: position, tile: tile))
+                    pushwalls.append(Pushwall(
+                        position: position,
+                        tile: tile,
+                        soundChannel: soundChannel
+                    ))
+                    soundChannel += 1
                 case .switch:
                     precondition(map[x, y].isWall, "Switch must be placed on a wall tile")
                     switches.append(Switch(position: position))

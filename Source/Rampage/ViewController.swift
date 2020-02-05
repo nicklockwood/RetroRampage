@@ -26,6 +26,20 @@ public func loadTextures() -> Textures {
     })
 }
 
+public extension SoundName {
+    var url: URL? {
+        return Bundle.main.url(forResource: rawValue, withExtension: "mp3")
+    }
+}
+
+func setUpAudio() {
+    for name in SoundName.allCases {
+        precondition(name.url != nil, "Missing mp3 file for \(name.rawValue)")
+    }
+    try? SoundManager.shared.activate()
+    _ = try? SoundManager.shared.preload(SoundName.allCases[0].url!)
+}
+
 class ViewController: UIViewController {
     private let imageView = UIImageView()
     private let panGesture = UIPanGestureRecognizer()
@@ -43,6 +57,7 @@ class ViewController: UIViewController {
             return
         }
 
+        setUpAudio()
         setUpImageView()
 
         let displayLink = CADisplayLink(target: self, selector: #selector(update))
@@ -86,8 +101,26 @@ class ViewController: UIViewController {
             if let action = world.update(timeStep: timeStep / worldSteps, input: input) {
                 switch action {
                 case .loadLevel(let index):
+                    SoundManager.shared.clearAll()
                     let index = index % levels.count
                     world.setLevel(levels[index])
+                case .playSounds(let sounds):
+                    for sound in sounds {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + sound.delay) {
+                            guard let url = sound.name?.url else {
+                                if let channel = sound.channel {
+                                    SoundManager.shared.clearChannel(channel)
+                                }
+                                return
+                            }
+                            try? SoundManager.shared.play(
+                                url,
+                                channel: sound.channel,
+                                volume: sound.volume,
+                                pan: sound.pan
+                            )
+                        }
+                    }
                 }
             }
         }
