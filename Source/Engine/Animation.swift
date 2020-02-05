@@ -18,6 +18,10 @@ public struct Animation {
 }
 
 public extension Animation {
+    var isCompleted: Bool {
+        return time >= duration
+    }
+
     var texture: Texture {
         guard duration > 0 else {
             return frames[0]

@@ -28,9 +28,11 @@ private func loadTextures() -> Textures {
 class ViewController: UIViewController {
     private let imageView = UIImageView()
     private let panGesture = UIPanGestureRecognizer()
+    private let tapGesture = UITapGestureRecognizer()
     private let textures = loadTextures()
     private var world = World(map: loadMap())
     private var lastFrameTime = CACurrentMediaTime()
+    private var lastFiredTime = 0.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +42,11 @@ class ViewController: UIViewController {
         displayLink.add(to: .main, forMode: .common)
 
         view.addGestureRecognizer(panGesture)
+        panGesture.delegate = self
+
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.addTarget(self, action: #selector(fire))
+        tapGesture.delegate = self
     }
 
     private var inputVector: Vector {
@@ -64,7 +71,8 @@ class ViewController: UIViewController {
         let rotation = inputVector.x * world.player.turningSpeed * worldTimeStep
         let input = Input(
             speed: -inputVector.y,
-            rotation: Rotation(sine: sin(rotation), cosine: cos(rotation))
+            rotation: Rotation(sine: sin(rotation), cosine: cos(rotation)),
+            isFiring: lastFiredTime > lastFrameTime
         )
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
@@ -79,6 +87,10 @@ class ViewController: UIViewController {
         imageView.image = UIImage(bitmap: renderer.bitmap)
     }
 
+    @objc func fire(_ gestureRecognizer: UITapGestureRecognizer) {
+        lastFiredTime = CACurrentMediaTime()
+    }
+
     func setUpImageView() {
         view.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,5 +101,14 @@ class ViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .black
         imageView.layer.magnificationFilter = .nearest
+    }
+}
+
+extension ViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        return true
     }
 }
