@@ -12,11 +12,13 @@ public struct Pushwall: Actor {
     public var position: Vector
     public var velocity: Vector
     public let tile: Tile
+    public let soundChannel: Int
 
-    public init(position: Vector, tile: Tile) {
+    public init(position: Vector, tile: Tile, soundChannel: Int) {
         self.position = position
         self.velocity = Vector(x: 0, y: 0)
         self.tile = tile
+        self.soundChannel = soundChannel
     }
 }
 
@@ -45,6 +47,7 @@ public extension Pushwall {
     }
 
     mutating func update(in world: inout World) {
+        let wasMoving = isMoving
         if isMoving == false, let intersection = world.player.intersection(with: self) {
             if abs(intersection.x) > abs(intersection.y) {
                 velocity = Vector(x: intersection.x > 0 ? speed : -speed, y: 0)
@@ -57,6 +60,14 @@ public extension Pushwall {
             velocity = Vector(x: 0, y: 0)
             position.x = position.x.rounded(.down) + 0.5
             position.y = position.y.rounded(.down) + 0.5
+        }
+        if isMoving {
+            world.playSound(.wallSlide, at: position, in: soundChannel)
+        } else if !isMoving {
+            world.playSound(nil, at: position, in: soundChannel)
+            if wasMoving {
+                world.playSound(.wallThud, at: position)
+            }
         }
     }
 }

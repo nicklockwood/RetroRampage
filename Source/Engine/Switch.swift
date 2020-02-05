@@ -35,6 +35,7 @@ public extension Switch {
             if world.player.rect.intersection(with: self.rect) != nil {
                 state = .on
                 animation = .switchFlip
+                world.playSound(.switchFlip, at: position)
             }
         case .on:
             if animation.isCompleted {
