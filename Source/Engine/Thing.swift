@@ -13,4 +13,6 @@ public enum Thing: Int, Decodable {
     case door
     case pushwall
     case `switch`
+    case medkit
+    case shotgun
 }

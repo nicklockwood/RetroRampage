@@ -8,6 +8,8 @@
 
 public enum SoundName: String, CaseIterable {
     case pistolFire
+    case shotgunFire
+    case shotgunPickup
     case ricochet
     case monsterHit
     case monsterGroan
@@ -20,6 +22,7 @@ public enum SoundName: String, CaseIterable {
     case playerDeath
     case playerWalk
     case squelch
+    case medkit
 }
 
 public struct Sound {
