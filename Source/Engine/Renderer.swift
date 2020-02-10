@@ -122,11 +122,14 @@ public extension Renderer {
         }
 
         // Player weapon
+        let weaponTexture = textures[world.player.animation.texture]
+        let aspectRatio = Double(weaponTexture.width) / Double(weaponTexture.height)
         let screenHeight = Double(bitmap.height)
+        let weaponWidth = screenHeight * aspectRatio
         bitmap.drawImage(
-            textures[world.player.animation.texture],
-            at: Vector(x: Double(bitmap.width) / 2 - screenHeight / 2, y: 0),
-            size: Vector(x: screenHeight, y: screenHeight)
+            weaponTexture,
+            at: Vector(x: Double(bitmap.width) / 2 - weaponWidth / 2, y: 0),
+            size: Vector(x: weaponWidth, y: screenHeight)
         )
 
         // Effects

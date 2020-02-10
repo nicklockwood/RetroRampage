@@ -16,6 +16,7 @@ public struct World {
     public private(set) var doors: [Door]
     public private(set) var pushwalls: [Pushwall]
     public private(set) var switches: [Switch]
+    public private(set) var pickups: [Pickup]
     public private(set) var monsters: [Monster]
     public private(set) var player: Player!
     public private(set) var effects: [Effect]
@@ -27,6 +28,7 @@ public struct World {
         self.doors = []
         self.pushwalls = []
         self.switches = []
+        self.pickups = []
         self.monsters = []
         self.effects = []
         self.isLevelEnded = false
@@ -124,6 +126,24 @@ public extension World {
         }
         player.avoidWalls(in: self)
 
+        // Handle pickups
+        for i in (0 ..< pickups.count).reversed() {
+            let pickup = pickups[i]
+            if player.intersection(with: pickup) != nil {
+                pickups.remove(at: i)
+                switch pickup.type {
+                case .medkit:
+                    player.health += 25
+                    playSound(.medkit, at: pickup.position)
+                    effects.append(Effect(type: .fadeIn, color: .green, duration: 0.5))
+                case .shotgun:
+                    player.setWeapon(.shotgun)
+                    playSound(.shotgunPickup, at: pickup.position)
+                    effects.append(Effect(type: .fadeIn, color: .white, duration: 0.5))
+                }
+            }
+        }
+
         // Check for stuck actors
         if player.isStuck(in: self) {
             hurtPlayer(1)
@@ -141,6 +161,7 @@ public extension World {
         let ray = Ray(origin: player.position, direction: player.direction)
         return monsters.map { $0.billboard(for: ray) } + doors.map { $0.billboard }
             + pushwalls.flatMap { $0.billboards(facing: player.position) }
+            + pickups.map { $0.billboard(for: ray) }
     }
 
     mutating func hurtPlayer(_ damage: Double) {
@@ -205,14 +226,17 @@ public extension World {
 
     mutating func setLevel(_ map: Tilemap) {
         let effects = self.effects
+        let player = self.player!
         self = World(map: map)
         self.effects = effects
+        self.player.inherit(from: player)
     }
 
     mutating func reset() {
         self.monsters = []
         self.doors = []
         self.switches = []
+        self.pickups = []
         self.isLevelEnded = false
         var pushwallCount = 0
         var soundChannel = 0
@@ -259,6 +283,10 @@ public extension World {
                 case .switch:
                     precondition(map[x, y].isWall, "Switch must be placed on a wall tile")
                     switches.append(Switch(position: position))
+                case .medkit:
+                    pickups.append(Pickup(type: .medkit, position: position))
+                case .shotgun:
+                    pickups.append(Pickup(type: .shotgun, position: position))
                 }
             }
         }

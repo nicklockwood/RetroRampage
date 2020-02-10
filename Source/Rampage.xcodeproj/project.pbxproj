@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0128F26223EEE7AE00439050 /* shotgunFire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0128F26123EEE7AE00439050 /* shotgunFire.mp3 */; };
+		0128F26423EEEB0A00439050 /* shotgunPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0128F26323EEEB0A00439050 /* shotgunPickup.mp3 */; };
 		012A0C4D22C96E150068E8EF /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0C4C22C96E150068E8EF /* Tile.swift */; };
 		012A0C4F22C96E1F0068E8EF /* Thing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0C4E22C96E1F0068E8EF /* Thing.swift */; };
 		012A0C6222CC200E0068E8EF /* Billboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0C6022CC200D0068E8EF /* Billboard.swift */; };
@@ -14,7 +16,10 @@
 		012A0C9E22D47C220068E8EF /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0C9D22D47C220068E8EF /* Actor.swift */; };
 		012A0CA222D7AD0A0068E8EF /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0CA122D7AD0A0068E8EF /* Animation.swift */; };
 		012DF10822E251CF00D52706 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012DF10722E251CF00D52706 /* Effect.swift */; };
+		013D492523ED607D00763FCA /* medkit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 013D492423ED607D00763FCA /* medkit.mp3 */; };
+		013D492723EE17C000763FCA /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013D492623EE17C000763FCA /* Weapon.swift */; };
 		01467C3E22E6F54600B5607D /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01467C3D22E6F54600B5607D /* Easing.swift */; };
+		0159A3F523DEF636001EEB81 /* Pickup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0159A3F423DEF636001EEB81 /* Pickup.swift */; };
 		015A23C9230586E3004CBB78 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015A23C8230586E3004CBB78 /* Switch.swift */; };
 		016E41B3228E9A5B00ACF137 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E41B2228E9A5B00ACF137 /* AppDelegate.swift */; };
 		016E41B5228E9A5B00ACF137 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E41B4228E9A5B00ACF137 /* ViewController.swift */; };
@@ -89,6 +94,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0128F26123EEE7AE00439050 /* shotgunFire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shotgunFire.mp3; sourceTree = "<group>"; };
+		0128F26323EEEB0A00439050 /* shotgunPickup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shotgunPickup.mp3; sourceTree = "<group>"; };
 		012A0C4C22C96E150068E8EF /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		012A0C4E22C96E1F0068E8EF /* Thing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thing.swift; sourceTree = "<group>"; };
 		012A0C6022CC200D0068E8EF /* Billboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Billboard.swift; sourceTree = "<group>"; };
@@ -96,7 +103,10 @@
 		012A0C9D22D47C220068E8EF /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		012A0CA122D7AD0A0068E8EF /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		012DF10722E251CF00D52706 /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
+		013D492423ED607D00763FCA /* medkit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = medkit.mp3; sourceTree = "<group>"; };
+		013D492623EE17C000763FCA /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 		01467C3D22E6F54600B5607D /* Easing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Easing.swift; sourceTree = "<group>"; };
+		0159A3F423DEF636001EEB81 /* Pickup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pickup.swift; sourceTree = "<group>"; };
 		015A23C8230586E3004CBB78 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		016E41AF228E9A5B00ACF137 /* Rampage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rampage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		016E41B2228E9A5B00ACF137 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -219,6 +229,7 @@
 				012DF10722E251CF00D52706 /* Effect.swift */,
 				01D09B0222A4958E0052745A /* Input.swift */,
 				012A0C6122CC200D0068E8EF /* Monster.swift */,
+				0159A3F423DEF636001EEB81 /* Pickup.swift */,
 				01D09AFA22A485040052745A /* Player.swift */,
 				01E396392342758D00D02236 /* Pushwall.swift */,
 				01D09B0422A5C9DB0052745A /* Ray.swift */,
@@ -232,6 +243,7 @@
 				01D09AFE22A48E990052745A /* Tilemap.swift */,
 				012A0C4E22C96E1F0068E8EF /* Thing.swift */,
 				01D09AF822A484B10052745A /* Vector.swift */,
+				013D492623EE17C000763FCA /* Weapon.swift */,
 				01ADC63F22B9846B00DC8AAD /* World.swift */,
 				016E41CC228E9A8600ACF137 /* Info.plist */,
 			);
@@ -242,6 +254,8 @@
 			isa = PBXGroup;
 			children = (
 				0199F55623E1A517003E3F08 /* pistolFire.mp3 */,
+				0128F26123EEE7AE00439050 /* shotgunFire.mp3 */,
+				0128F26323EEEB0A00439050 /* shotgunPickup.mp3 */,
 				0199F55F23E1A517003E3F08 /* monsterGroan.mp3 */,
 				0199F55523E1A517003E3F08 /* monsterSwipe.mp3 */,
 				0199F55A23E1A517003E3F08 /* monsterHit.mp3 */,
@@ -254,6 +268,7 @@
 				0199F55723E1A517003E3F08 /* wallSlide.mp3 */,
 				0199F56123E1A517003E3F08 /* wallThud.mp3 */,
 				0199F56023E1A517003E3F08 /* switchFlip.mp3 */,
+				013D492423ED607D00763FCA /* medkit.mp3 */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -383,6 +398,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0128F26223EEE7AE00439050 /* shotgunFire.mp3 in Resources */,
 				0199F56E23E1A517003E3F08 /* wallThud.mp3 in Resources */,
 				0199F56623E1A517003E3F08 /* playerWalk.mp3 in Resources */,
 				0199F56C23E1A517003E3F08 /* monsterGroan.mp3 in Resources */,
@@ -391,6 +407,7 @@
 				0199F56423E1A517003E3F08 /* wallSlide.mp3 in Resources */,
 				0199F56323E1A517003E3F08 /* pistolFire.mp3 in Resources */,
 				016E41BA228E9A5E00ACF137 /* Assets.xcassets in Resources */,
+				013D492523ED607D00763FCA /* medkit.mp3 in Resources */,
 				0199F56223E1A517003E3F08 /* monsterSwipe.mp3 in Resources */,
 				01D09B0122A493A70052745A /* Levels.json in Resources */,
 				0199F56D23E1A517003E3F08 /* switchFlip.mp3 in Resources */,
@@ -400,6 +417,7 @@
 				0199F56823E1A517003E3F08 /* squelch.mp3 in Resources */,
 				0199F56B23E1A517003E3F08 /* playerDeath.mp3 in Resources */,
 				0199F56923E1A517003E3F08 /* ricochet.mp3 in Resources */,
+				0128F26423EEEB0A00439050 /* shotgunPickup.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +456,7 @@
 				012DF10822E251CF00D52706 /* Effect.swift in Sources */,
 				012A0C6322CC200E0068E8EF /* Monster.swift in Sources */,
 				01D09B0B22A7F7570052745A /* Textures.swift in Sources */,
+				0159A3F523DEF636001EEB81 /* Pickup.swift in Sources */,
 				015A23C9230586E3004CBB78 /* Switch.swift in Sources */,
 				01D09AFF22A48E990052745A /* Tilemap.swift in Sources */,
 				01D09AFD22A4873B0052745A /* Rect.swift in Sources */,
@@ -451,6 +470,7 @@
 				01D09B0722A6E09B0052745A /* Rotation.swift in Sources */,
 				01D09AFB22A485040052745A /* Player.swift in Sources */,
 				012A0C6222CC200E0068E8EF /* Billboard.swift in Sources */,
+				013D492723EE17C000763FCA /* Weapon.swift in Sources */,
 				01ADC64022B9846B00DC8AAD /* World.swift in Sources */,
 				012A0C4D22C96E150068E8EF /* Tile.swift in Sources */,
 				01D0F5F122FF095E00682CA1 /* Door.swift in Sources */,
