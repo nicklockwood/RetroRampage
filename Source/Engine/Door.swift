@@ -37,7 +37,8 @@ public struct Door {
 public extension Door {
     var rect: Rect {
         let position = self.position + direction * (offset - 0.5)
-        return Rect(min: position, max: position + direction)
+        let depth = direction.orthogonal * 0.1
+        return Rect(min: position + depth, max: position + direction - depth)
     }
 
     var offset: Double {
@@ -70,7 +71,11 @@ public extension Door {
     mutating func update(in world: inout World) {
         switch state {
         case .closed:
-            if world.player.intersection(with: self) != nil {
+            if world.player.intersection(with: self) != nil ||
+                world.monsters.contains(where: { monster in
+                    monster.isDead == false &&
+                        monster.intersection(with: self) != nil
+                }) {
                 state = .opening
                 world.playSound(.doorSlide, at: position)
                 time = 0
