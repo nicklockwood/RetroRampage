@@ -7,7 +7,7 @@
 //
 
 public struct Rect {
-    var min, max: Vector
+    public var min, max: Vector
 
     public init(min: Vector, max: Vector) {
         self.min = min

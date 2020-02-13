@@ -333,6 +333,21 @@ public extension World {
         return map.things[y * map.width + x] == .door
     }
 
+    func door(at x: Int, _ y: Int) -> Door? {
+        guard isDoor(at: x, y) else {
+            return nil
+        }
+        return doors.first(where: {
+            Int($0.position.x) == x && Int($0.position.y) == y
+        })
+    }
+
+    func pushwall(at x: Int, _ y: Int) -> Pushwall? {
+        return pushwalls.first(where: {
+            Int($0.position.x) == x && Int($0.position.y) == y
+        })
+    }
+
     func `switch`(at x: Int, _ y: Int) -> Switch? {
         guard map.things[y * map.width + x] == .switch else {
             return nil
@@ -340,5 +355,54 @@ public extension World {
         return switches.first(where: {
             Int($0.position.x) == x && Int($0.position.y) == y
         })
+    }
+}
+
+extension World: Graph {
+    public struct Node: Hashable {
+        public let x, y: Double
+
+        public init(x: Double, y: Double) {
+            self.x = x.rounded(.down) + 0.5
+            self.y = y.rounded(.down) + 0.5
+        }
+    }
+
+    public func findPath(
+        from start: Vector,
+        to end: Vector,
+        maxDistance: Double = 50
+    ) -> [Vector] {
+        return findPath(
+            from: Node(x: start.x, y: start.y),
+            to: Node(x: end.x, y: end.y),
+            maxDistance: maxDistance
+        ).map { node in
+            Vector(x: node.x, y: node.y)
+        }
+    }
+
+    public func nodesConnectedTo(_ node: Node) -> [Node] {
+        return [
+            Node(x: node.x - 1, y: node.y),
+            Node(x: node.x + 1, y: node.y),
+            Node(x: node.x, y: node.y - 1),
+            Node(x: node.x, y: node.y + 1),
+        ].filter { node in
+            let x = Int(node.x), y = Int(node.y)
+            return map[x, y].isWall == false && pushwall(at: x, y) == nil
+        }
+    }
+
+    public func estimatedDistance(from a: Node, to b: Node) -> Double {
+        return abs(b.x - a.x) + abs(b.y - a.y)
+    }
+
+    public func stepDistance(from a: Node, to b: Node) -> Double {
+        let x = Int(b.x), y = Int(b.y)
+        if door(at: x, y)?.state == .closed {
+            return 5
+        }
+        return 1
     }
 }

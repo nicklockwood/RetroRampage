@@ -6,6 +6,8 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
+import Engine
+
 private let fizzle = (0 ..< 10000).shuffled()
 
 public struct Renderer {

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public struct Vector: Equatable {
+public struct Vector: Hashable {
     public var x, y: Double
 
     public init(x: Double, y: Double) {

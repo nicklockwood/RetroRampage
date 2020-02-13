@@ -9,6 +9,7 @@
 public enum MonsterState {
     case idle
     case chasing
+    case blocked
     case scratching
     case hurt
     case dead
@@ -24,6 +25,7 @@ public struct Monster: Actor {
     public var animation: Animation = .monsterIdle
     public let attackCooldown: Double = 0.4
     public private(set) var lastAttackTime: Double = 0
+    public private(set) var path: [Vector] = []
 
     public init(position: Vector) {
         self.position = position
@@ -38,27 +40,42 @@ public extension Monster {
     mutating func update(in world: inout World) {
         switch state {
         case .idle:
-            if canSeePlayer(in: world) {
+            if canSeePlayer(in: world) || canHearPlayer(in: world) {
                 state = .chasing
                 animation = .monsterWalk
                 world.playSound(.monsterGroan, at: position)
             }
         case .chasing:
-            guard canSeePlayer(in: world) else {
-                state = .idle
-                animation = .monsterIdle
-                velocity = Vector(x: 0, y: 0)
+            if canSeePlayer(in: world) || canHearPlayer(in: world) {
+                path = world.findPath(from: position, to: world.player.position)
+                if canReachPlayer(in: world) {
+                    state = .scratching
+                    animation = .monsterScratch
+                    lastAttackTime = -attackCooldown
+                    velocity = Vector(x: 0, y: 0)
+                    break
+                }
+            }
+            guard let destination = path.first else {
                 break
             }
-            if canReachPlayer(in: world) {
-                state = .scratching
-                animation = .monsterScratch
-                lastAttackTime = -attackCooldown
-                velocity = Vector(x: 0, y: 0)
+            let direction = destination - position
+            let distance = direction.length
+            if distance < 0.1 {
+                path.removeFirst()
                 break
             }
-            let direction = world.player.position - position
-            velocity = direction * (speed / direction.length)
+            velocity = direction * (speed / distance)
+            if world.monsters.contains(where: isBlocked(by:)) {
+                state = .blocked
+                animation = .monsterBlocked
+                velocity = Vector(x: 0, y: 0)
+            }
+        case .blocked:
+            if animation.isCompleted {
+                state = .chasing
+                animation = .monsterWalk
+            }
         case .scratching:
             guard canReachPlayer(in: world) else {
                 state = .chasing
@@ -82,13 +99,47 @@ public extension Monster {
         }
     }
 
+    func isBlocked(by other: Monster) -> Bool {
+        // Ignore dead or inactive monsters
+        if other.isDead || other.state != .chasing {
+            return false
+        }
+        // Ignore if too far away
+        let direction = other.position - position
+        let distance = direction.length
+        if distance > radius + other.radius + 0.5 {
+            return false
+        }
+        // Is standing in the direction we're moving
+        return (direction / distance).dot(velocity / velocity.length) > 0.5
+    }
+
     func canSeePlayer(in world: World) -> Bool {
-        let direction = world.player.position - position
+        var direction = world.player.position - position
         let playerDistance = direction.length
-        let ray = Ray(origin: position, direction: direction / playerDistance)
-        let wallHit = world.hitTest(ray)
-        let wallDistance = (wallHit - position).length
-        return wallDistance > playerDistance
+        direction /= playerDistance
+        let orthogonal = direction.orthogonal
+        for offset in [-0.2, 0.2] {
+            let origin = position + orthogonal * offset
+            let ray = Ray(origin: origin, direction: direction)
+            let wallHit = world.hitTest(ray)
+            let wallDistance = (wallHit - position).length
+            if wallDistance > playerDistance {
+                return true
+            }
+        }
+        return false
+    }
+
+    func canHearPlayer(in world: World) -> Bool {
+        guard world.player.state == .firing else {
+            return false
+        }
+        return world.findPath(
+            from: position,
+            to: world.player.position,
+            maxDistance: 12
+        ).isEmpty == false
     }
 
     func canReachPlayer(in world: World) -> Bool {
@@ -122,6 +173,9 @@ public extension Animation {
     static let monsterIdle = Animation(frames: [
         .monster
     ], duration: 0)
+    static let monsterBlocked = Animation(frames: [
+        .monster
+    ], duration: 1)
     static let monsterWalk = Animation(frames: [
         .monsterWalk1,
         .monster,

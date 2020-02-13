@@ -1,8 +1,8 @@
 //
-//  Textures.swift
+//  Texture.swift
 //  Engine
 //
-//  Created by Nick Lockwood on 05/06/2019.
+//  Created by Nick Lockwood on 13/02/2020.
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
@@ -28,22 +28,4 @@ public enum Texture: String, CaseIterable {
     case switch1, switch2, switch3, switch4
     case elevatorFloor, elevatorCeiling, elevatorSideWall, elevatorBackWall
     case medkit
-}
-
-public struct Textures {
-    private let textures: [Texture: Bitmap]
-}
-
-public extension Textures {
-    init(loader: (String) -> Bitmap) {
-        var textures = [Texture: Bitmap]()
-        for texture in Texture.allCases {
-            textures[texture] = loader(texture.rawValue)
-        }
-        self.init(textures: textures)
-    }
-
-    subscript(_ texture: Texture) -> Bitmap {
-        return textures[texture]!
-    }
 }

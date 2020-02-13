@@ -9,6 +9,7 @@
 import XCTest
 import Engine
 import Rampage
+import Renderer
 
 class RampageTests: XCTestCase {
     let world = World(map: loadLevels()[0])

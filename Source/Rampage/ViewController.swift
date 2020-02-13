@@ -8,6 +8,7 @@
 
 import UIKit
 import Engine
+import Renderer
 
 private let joystickRadius: Double = 40
 private let maximumTimeStep: Double = 1 / 20

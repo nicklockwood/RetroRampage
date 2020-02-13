@@ -6,6 +6,8 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
+import Engine
+
 public struct Bitmap {
     public private(set) var pixels: [Color]
     public let width, height: Int

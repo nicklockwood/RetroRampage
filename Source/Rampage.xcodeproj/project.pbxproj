@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0108A65E23F4D84C0075E1AF /* Renderer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0108A65723F4D84C0075E1AF /* Renderer.framework */; };
+		0108A65F23F4D84C0075E1AF /* Renderer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0108A65723F4D84C0075E1AF /* Renderer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0108A66323F4D8E80075E1AF /* Bitmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AF222A482030052745A /* Bitmap.swift */; };
+		0108A66523F4D8F00075E1AF /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ADC63B22B957FD00DC8AAD /* Renderer.swift */; };
+		0108A66723F4D9370075E1AF /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AF022A481AB0052745A /* Color.swift */; };
+		0108A66923F4D9B70075E1AF /* Textures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108A66823F4D9B70075E1AF /* Textures.swift */; };
+		0108A66F23F543750075E1AF /* Pathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108A66E23F543740075E1AF /* Pathfinder.swift */; };
 		0128F26223EEE7AE00439050 /* shotgunFire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0128F26123EEE7AE00439050 /* shotgunFire.mp3 */; };
 		0128F26423EEEB0A00439050 /* shotgunPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0128F26323EEEB0A00439050 /* shotgunPickup.mp3 */; };
 		012A0C4D22C96E150068E8EF /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0C4C22C96E150068E8EF /* Tile.swift */; };
@@ -43,10 +50,7 @@
 		0199F56E23E1A517003E3F08 /* wallThud.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0199F56123E1A517003E3F08 /* wallThud.mp3 */; };
 		0199F57023E1AFEA003E3F08 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0199F56F23E1AFEA003E3F08 /* Sounds.swift */; };
 		0199F57423E242D4003E3F08 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0199F57323E242D4003E3F08 /* SoundManager.swift */; };
-		01ADC63C22B957FD00DC8AAD /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ADC63B22B957FD00DC8AAD /* Renderer.swift */; };
 		01ADC64022B9846B00DC8AAD /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ADC63F22B9846B00DC8AAD /* World.swift */; };
-		01D09AF122A481AB0052745A /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AF022A481AB0052745A /* Color.swift */; };
-		01D09AF322A482030052745A /* Bitmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AF222A482030052745A /* Bitmap.swift */; };
 		01D09AF522A482450052745A /* UIImage+Bitmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AF422A482450052745A /* UIImage+Bitmap.swift */; };
 		01D09AF922A484B10052745A /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AF822A484B10052745A /* Vector.swift */; };
 		01D09AFB22A485040052745A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AFA22A485040052745A /* Player.swift */; };
@@ -56,13 +60,27 @@
 		01D09B0322A4958E0052745A /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0222A4958E0052745A /* Input.swift */; };
 		01D09B0522A5C9DB0052745A /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0422A5C9DB0052745A /* Ray.swift */; };
 		01D09B0722A6E09B0052745A /* Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0622A6E09A0052745A /* Rotation.swift */; };
-		01D09B0B22A7F7570052745A /* Textures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0A22A7F7570052745A /* Textures.swift */; };
+		01D09B0B22A7F7570052745A /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0A22A7F7570052745A /* Texture.swift */; };
 		01D0F5D922F80E1600682CA1 /* RampageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F5D822F80E1600682CA1 /* RampageTests.swift */; };
 		01D0F5F122FF095E00682CA1 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F5F022FF095E00682CA1 /* Door.swift */; };
 		01E3963A2342758D00D02236 /* Pushwall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E396392342758D00D02236 /* Pushwall.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0108A65C23F4D84C0075E1AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 016E41A7228E9A5B00ACF137 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0108A65623F4D84C0075E1AF;
+			remoteInfo = Renderer;
+		};
+		0108A66C23F4DA5D0075E1AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 016E41A7228E9A5B00ACF137 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 016E41C8228E9A8600ACF137;
+			remoteInfo = Engine;
+		};
 		016E41CE228E9A8600ACF137 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 016E41A7228E9A5B00ACF137 /* Project object */;
@@ -87,6 +105,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				016E41D1228E9A8600ACF137 /* Engine.framework in Embed Frameworks */,
+				0108A65F23F4D84C0075E1AF /* Renderer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +113,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0108A65723F4D84C0075E1AF /* Renderer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Renderer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0108A65A23F4D84C0075E1AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0108A66823F4D9B70075E1AF /* Textures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Textures.swift; sourceTree = "<group>"; };
+		0108A66E23F543740075E1AF /* Pathfinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pathfinder.swift; sourceTree = "<group>"; };
 		0128F26123EEE7AE00439050 /* shotgunFire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shotgunFire.mp3; sourceTree = "<group>"; };
 		0128F26323EEEB0A00439050 /* shotgunPickup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shotgunPickup.mp3; sourceTree = "<group>"; };
 		012A0C4C22C96E150068E8EF /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
@@ -145,7 +168,7 @@
 		01D09B0222A4958E0052745A /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		01D09B0422A5C9DB0052745A /* Ray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
 		01D09B0622A6E09A0052745A /* Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rotation.swift; sourceTree = "<group>"; };
-		01D09B0A22A7F7570052745A /* Textures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Textures.swift; sourceTree = "<group>"; };
+		01D09B0A22A7F7570052745A /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
 		01D0F5D622F80E1600682CA1 /* RampageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RampageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D0F5D822F80E1600682CA1 /* RampageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RampageTests.swift; sourceTree = "<group>"; };
 		01D0F5DA22F80E1600682CA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -154,11 +177,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0108A65423F4D84C0075E1AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		016E41AC228E9A5B00ACF137 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				016E41D0228E9A8600ACF137 /* Engine.framework in Frameworks */,
+				0108A65E23F4D84C0075E1AF /* Renderer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,13 +210,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0108A65823F4D84C0075E1AF /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				01D09AF222A482030052745A /* Bitmap.swift */,
+				01ADC63B22B957FD00DC8AAD /* Renderer.swift */,
+				0108A66823F4D9B70075E1AF /* Textures.swift */,
+				0108A65A23F4D84C0075E1AF /* Info.plist */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		0108A66A23F4DA580075E1AF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		016E41A6228E9A5B00ACF137 = {
 			isa = PBXGroup;
 			children = (
 				016E41B1228E9A5B00ACF137 /* Rampage */,
 				016E41CA228E9A8600ACF137 /* Engine */,
+				0108A65823F4D84C0075E1AF /* Renderer */,
 				01D0F5D722F80E1600682CA1 /* RampageTests */,
 				016E41B0228E9A5B00ACF137 /* Products */,
+				0108A66A23F4DA580075E1AF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -195,6 +246,7 @@
 				016E41AF228E9A5B00ACF137 /* Rampage.app */,
 				016E41C9228E9A8600ACF137 /* Engine.framework */,
 				01D0F5D622F80E1600682CA1 /* RampageTests.xctest */,
+				0108A65723F4D84C0075E1AF /* Renderer.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,23 +274,22 @@
 				012A0C9D22D47C220068E8EF /* Actor.swift */,
 				012A0CA122D7AD0A0068E8EF /* Animation.swift */,
 				012A0C6022CC200D0068E8EF /* Billboard.swift */,
-				01D09AF222A482030052745A /* Bitmap.swift */,
 				01D09AF022A481AB0052745A /* Color.swift */,
 				01D0F5F022FF095E00682CA1 /* Door.swift */,
 				01467C3D22E6F54600B5607D /* Easing.swift */,
 				012DF10722E251CF00D52706 /* Effect.swift */,
 				01D09B0222A4958E0052745A /* Input.swift */,
 				012A0C6122CC200D0068E8EF /* Monster.swift */,
+				0108A66E23F543740075E1AF /* Pathfinder.swift */,
 				0159A3F423DEF636001EEB81 /* Pickup.swift */,
 				01D09AFA22A485040052745A /* Player.swift */,
 				01E396392342758D00D02236 /* Pushwall.swift */,
 				01D09B0422A5C9DB0052745A /* Ray.swift */,
 				01D09AFC22A4873B0052745A /* Rect.swift */,
-				01ADC63B22B957FD00DC8AAD /* Renderer.swift */,
 				01D09B0622A6E09A0052745A /* Rotation.swift */,
 				015A23C8230586E3004CBB78 /* Switch.swift */,
-				01D09B0A22A7F7570052745A /* Textures.swift */,
 				0199F56F23E1AFEA003E3F08 /* Sounds.swift */,
+				01D09B0A22A7F7570052745A /* Texture.swift */,
 				012A0C4C22C96E150068E8EF /* Tile.swift */,
 				01D09AFE22A48E990052745A /* Tilemap.swift */,
 				012A0C4E22C96E1F0068E8EF /* Thing.swift */,
@@ -285,6 +336,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		0108A65223F4D84C0075E1AF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		016E41C4228E9A8600ACF137 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -295,6 +353,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		0108A65623F4D84C0075E1AF /* Renderer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0108A66223F4D84C0075E1AF /* Build configuration list for PBXNativeTarget "Renderer" */;
+			buildPhases = (
+				0108A65223F4D84C0075E1AF /* Headers */,
+				0108A65323F4D84C0075E1AF /* Sources */,
+				0108A65423F4D84C0075E1AF /* Frameworks */,
+				0108A65523F4D84C0075E1AF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0108A66D23F4DA5D0075E1AF /* PBXTargetDependency */,
+			);
+			name = Renderer;
+			productName = Renderer;
+			productReference = 0108A65723F4D84C0075E1AF /* Renderer.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		016E41AE228E9A5B00ACF137 /* Rampage */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 016E41C1228E9A5E00ACF137 /* Build configuration list for PBXNativeTarget "Rampage" */;
@@ -308,6 +385,7 @@
 			);
 			dependencies = (
 				016E41CF228E9A8600ACF137 /* PBXTargetDependency */,
+				0108A65D23F4D84C0075E1AF /* PBXTargetDependency */,
 			);
 			name = Rampage;
 			productName = Rampage;
@@ -356,10 +434,14 @@
 		016E41A7228E9A5B00ACF137 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				DefaultBuildSystemTypeForWorkspace = Original;
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Nick Lockwood";
 				TargetAttributes = {
+					0108A65623F4D84C0075E1AF = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
 					016E41AE228E9A5B00ACF137 = {
 						CreatedOnToolsVersion = 10.1;
 					};
@@ -388,12 +470,20 @@
 			targets = (
 				016E41AE228E9A5B00ACF137 /* Rampage */,
 				016E41C8228E9A8600ACF137 /* Engine */,
+				0108A65623F4D84C0075E1AF /* Renderer */,
 				01D0F5D522F80E1600682CA1 /* RampageTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0108A65523F4D84C0075E1AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		016E41AD228E9A5B00ACF137 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -438,6 +528,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0108A65323F4D84C0075E1AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0108A66323F4D8E80075E1AF /* Bitmap.swift in Sources */,
+				0108A66923F4D9B70075E1AF /* Textures.swift in Sources */,
+				0108A66523F4D8F00075E1AF /* Renderer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		016E41AB228E9A5B00ACF137 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -455,27 +555,26 @@
 			files = (
 				012DF10822E251CF00D52706 /* Effect.swift in Sources */,
 				012A0C6322CC200E0068E8EF /* Monster.swift in Sources */,
-				01D09B0B22A7F7570052745A /* Textures.swift in Sources */,
+				01D09B0B22A7F7570052745A /* Texture.swift in Sources */,
 				0159A3F523DEF636001EEB81 /* Pickup.swift in Sources */,
 				015A23C9230586E3004CBB78 /* Switch.swift in Sources */,
 				01D09AFF22A48E990052745A /* Tilemap.swift in Sources */,
 				01D09AFD22A4873B0052745A /* Rect.swift in Sources */,
-				01ADC63C22B957FD00DC8AAD /* Renderer.swift in Sources */,
 				0199F57023E1AFEA003E3F08 /* Sounds.swift in Sources */,
 				012A0C9E22D47C220068E8EF /* Actor.swift in Sources */,
 				012A0C4F22C96E1F0068E8EF /* Thing.swift in Sources */,
 				01D09AF922A484B10052745A /* Vector.swift in Sources */,
-				01D09AF322A482030052745A /* Bitmap.swift in Sources */,
 				01467C3E22E6F54600B5607D /* Easing.swift in Sources */,
 				01D09B0722A6E09B0052745A /* Rotation.swift in Sources */,
 				01D09AFB22A485040052745A /* Player.swift in Sources */,
 				012A0C6222CC200E0068E8EF /* Billboard.swift in Sources */,
 				013D492723EE17C000763FCA /* Weapon.swift in Sources */,
 				01ADC64022B9846B00DC8AAD /* World.swift in Sources */,
+				0108A66723F4D9370075E1AF /* Color.swift in Sources */,
 				012A0C4D22C96E150068E8EF /* Tile.swift in Sources */,
 				01D0F5F122FF095E00682CA1 /* Door.swift in Sources */,
+				0108A66F23F543750075E1AF /* Pathfinder.swift in Sources */,
 				01D09B0322A4958E0052745A /* Input.swift in Sources */,
-				01D09AF122A481AB0052745A /* Color.swift in Sources */,
 				012A0CA222D7AD0A0068E8EF /* Animation.swift in Sources */,
 				01D09B0522A5C9DB0052745A /* Ray.swift in Sources */,
 				01E3963A2342758D00D02236 /* Pushwall.swift in Sources */,
@@ -493,6 +592,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0108A65D23F4D84C0075E1AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0108A65623F4D84C0075E1AF /* Renderer */;
+			targetProxy = 0108A65C23F4D84C0075E1AF /* PBXContainerItemProxy */;
+		};
+		0108A66D23F4DA5D0075E1AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 016E41C8228E9A8600ACF137 /* Engine */;
+			targetProxy = 0108A66C23F4DA5D0075E1AF /* PBXContainerItemProxy */;
+		};
 		016E41CF228E9A8600ACF137 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 016E41C8228E9A8600ACF137 /* Engine */;
@@ -525,6 +634,65 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0108A66023F4D84C0075E1AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8VQKF583ED;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Renderer/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.charcoaldesign.Renderer;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_DISABLE_SAFETY_CHECKS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		0108A66123F4D84C0075E1AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8VQKF583ED;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Renderer/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.charcoaldesign.Renderer;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_DISABLE_SAFETY_CHECKS = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		016E41BF228E9A5E00ACF137 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -784,6 +952,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0108A66223F4D84C0075E1AF /* Build configuration list for PBXNativeTarget "Renderer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0108A66023F4D84C0075E1AF /* Debug */,
+				0108A66123F4D84C0075E1AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		016E41AA228E9A5B00ACF137 /* Build configuration list for PBXProject "Rampage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -8,6 +8,7 @@
 
 import UIKit
 import Engine
+import Renderer
 
 extension UIImage {
     convenience init?(bitmap: Bitmap) {
