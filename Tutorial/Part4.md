@@ -106,7 +106,7 @@ extension Bitmap {
 }
 ```
 
-This method initializes a `Bitmap` from a `UIImage`. I works by creating a new `CGContext` backed by an array of `Color` pixels, then drawing the `UIImage` into that context, thereby filling the `Color` array with the image contents.
+This method initializes a `Bitmap` from a `UIImage`. It works by creating a new `CGContext` backed by an array of `Color` pixels, then drawing the `UIImage` into that context, thereby filling the `Color` array with the image contents.
 
 In `ViewController.swift`, add the following free function at the top of the file<sup><a id="reference4"></a>[[4]](#footnote4)</sup>:
 
