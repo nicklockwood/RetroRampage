@@ -11,7 +11,7 @@ import Engine
 import Rampage
 
 class RampageTests: XCTestCase {
-    let world = World(map: loadMap())
+    let world = World(map: loadLevels()[0])
     let textures = loadTextures()
 
     func testRenderFrame() {

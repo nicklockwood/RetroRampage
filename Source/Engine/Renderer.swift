@@ -64,6 +64,12 @@ public extension Renderer {
             let wallStart = Vector(x: Double(x), y: (Double(bitmap.height) - height) / 2 - 0.001)
             bitmap.drawColumn(textureX, of: wallTexture, at: wallStart, height: height)
 
+            // Draw switch
+            if let s = world.switch(at: tileX, tileY) {
+                let switchTexture = textures[s.animation.texture]
+                bitmap.drawColumn(textureX, of: switchTexture, at: wallStart, height: height)
+            }
+
             // Draw floor and ceiling
             var floorTile: Tile!
             var floorTexture, ceilingTexture: Bitmap!

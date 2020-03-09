@@ -12,14 +12,17 @@ public enum Tile: Int, Decodable {
     case crackWall
     case slimeWall
     case crackFloor
+    case elevatorFloor
+    case elevatorSideWall
+    case elevatorBackWall
 }
 
 public extension Tile {
     var isWall: Bool {
         switch self {
-        case .wall, .crackWall, .slimeWall:
+        case .wall, .crackWall, .slimeWall, .elevatorSideWall, .elevatorBackWall:
             return true
-        case .floor, .crackFloor:
+        case .floor, .crackFloor, .elevatorFloor:
             return false
         }
     }
@@ -36,6 +39,12 @@ public extension Tile {
             return [.crackWall, .crackWall2]
         case .slimeWall:
             return [.slimeWall, .slimeWall2]
+        case .elevatorSideWall:
+            return [.elevatorSideWall, .elevatorSideWall]
+        case .elevatorBackWall:
+            return [.elevatorBackWall, .elevatorBackWall]
+        case .elevatorFloor:
+            return [.elevatorFloor, .elevatorCeiling]
         }
     }
 }
