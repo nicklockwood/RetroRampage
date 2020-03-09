@@ -8,24 +8,23 @@
 
 public struct Bitmap {
     public private(set) var pixels: [Color]
-    public let width: Int
+    public let width, height: Int
+    public let isOpaque: Bool
 
-    public init(width: Int, pixels: [Color]) {
-        self.width = width
+    public init(height: Int, pixels: [Color]) {
+        self.height = height
+        self.width = pixels.count / height
         self.pixels = pixels
+        self.isOpaque = pixels.allSatisfy { $0.isOpaque }
     }
 }
 
 public extension Bitmap {
-    var height: Int {
-        return pixels.count / width
-    }
-
     subscript(x: Int, y: Int) -> Color {
-        get { return pixels[y * width + x] }
+        get { return pixels[x * height + y] }
         set {
             guard x >= 0, y >= 0, x < width, y < height else { return }
-            pixels[y * width + x] = newValue
+            pixels[x * height + y] = newValue
         }
     }
 
@@ -35,12 +34,14 @@ public extension Bitmap {
 
     init(width: Int, height: Int, color: Color) {
         self.pixels = Array(repeating: color, count: width * height)
+        self.height = height
         self.width = width
+        self.isOpaque = color.isOpaque
     }
 
     mutating func fill(rect: Rect, color: Color) {
-        for y in Int(rect.min.y) ..< Int(rect.max.y) {
-            for x in Int(rect.min.x) ..< Int(rect.max.x) {
+        for x in Int(rect.min.x) ..< Int(rect.max.x) {
+            for y in Int(rect.min.y) ..< Int(rect.max.y) {
                 self[x, y] = color
             }
         }
@@ -69,10 +70,19 @@ public extension Bitmap {
     mutating func drawColumn(_ sourceX: Int, of source: Bitmap, at point: Vector, height: Double) {
         let start = Int(point.y), end = Int((point.y + height).rounded(.up))
         let stepY = Double(source.height) / height
-        for y in max(0, start) ..< min(self.height, end) {
-            let sourceY = max(0, Double(y) - point.y) * stepY
-            let sourceColor = source[sourceX, Int(sourceY)]
-            blendPixel(at: Int(point.x), y, with: sourceColor)
+        let offset = Int(point.x) * self.height
+        if source.isOpaque {
+            for y in max(0, start) ..< min(self.height, end) {
+                let sourceY = max(0, Double(y) - point.y) * stepY
+                let sourceColor = source[sourceX, Int(sourceY)]
+                pixels[offset + y] = sourceColor
+            }
+        } else {
+            for y in max(0, start) ..< min(self.height, end) {
+                let sourceY = max(0, Double(y) - point.y) * stepY
+                let sourceColor = source[sourceX, Int(sourceY)]
+                blendPixel(at: offset + y, with: sourceColor)
+            }
         }
     }
 
@@ -86,14 +96,21 @@ public extension Bitmap {
         }
     }
 
-    private mutating func blendPixel(at x: Int, _ y: Int, with newColor: Color) {
-        let oldColor = self[x, y]
-        let inverseAlpha = 1 - Double(newColor.a) / 255
-        self[x, y] = Color(
-            r: UInt8(Double(oldColor.r) * inverseAlpha) + newColor.r,
-            g: UInt8(Double(oldColor.g) * inverseAlpha) + newColor.g,
-            b: UInt8(Double(oldColor.b) * inverseAlpha) + newColor.b
-        )
+    private mutating func blendPixel(at index: Int, with newColor: Color) {
+        switch newColor.a {
+        case 0:
+            break
+        case 255:
+            pixels[index] = newColor
+        default:
+            let oldColor = pixels[index]
+            let inverseAlpha = 1 - Double(newColor.a) / 255
+            pixels[index] = Color(
+                r: UInt8(Double(oldColor.r) * inverseAlpha) + newColor.r,
+                g: UInt8(Double(oldColor.g) * inverseAlpha) + newColor.g,
+                b: UInt8(Double(oldColor.b) * inverseAlpha) + newColor.b
+            )
+        }
     }
 
     mutating func tint(with color: Color, opacity: Double) {
@@ -104,10 +121,8 @@ public extension Bitmap {
             b: UInt8(Double(color.b) * alpha),
             a: UInt8(255 * alpha)
         )
-        for y in 0 ..< height {
-            for x in 0 ..< width {
-                blendPixel(at: x, y, with: color)
-            }
+        for i in pixels.indices {
+            blendPixel(at: i, with: color)
         }
     }
 }
