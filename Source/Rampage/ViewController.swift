@@ -13,10 +13,11 @@ private let joystickRadius: Double = 40
 private let maximumTimeStep: Double = 1 / 20
 private let worldTimeStep: Double = 1 / 120
 
-public func loadMap() -> Tilemap {
-    let jsonURL = Bundle.main.url(forResource: "Map", withExtension: "json")!
+public func loadLevels() -> [Tilemap] {
+    let jsonURL = Bundle.main.url(forResource: "Levels", withExtension: "json")!
     let jsonData = try! Data(contentsOf: jsonURL)
-    return try! JSONDecoder().decode(Tilemap.self, from: jsonData)
+    let levels = try! JSONDecoder().decode([MapData].self, from: jsonData)
+    return levels.enumerated().map { Tilemap($0.element, index: $0.offset) }
 }
 
 public func loadTextures() -> Textures {
@@ -30,7 +31,8 @@ class ViewController: UIViewController {
     private let panGesture = UIPanGestureRecognizer()
     private let tapGesture = UITapGestureRecognizer()
     private let textures = loadTextures()
-    private var world = World(map: loadMap())
+    private let levels = loadLevels()
+    private lazy var world = World(map: levels[0])
     private var lastFrameTime = CACurrentMediaTime()
     private var lastFiredTime = 0.0
 
@@ -81,7 +83,13 @@ class ViewController: UIViewController {
         )
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
-            world.update(timeStep: timeStep / worldSteps, input: input)
+            if let action = world.update(timeStep: timeStep / worldSteps, input: input) {
+                switch action {
+                case .loadLevel(let index):
+                    let index = index % levels.count
+                    world.setLevel(levels[index])
+                }
+            }
         }
         lastFrameTime = displayLink.timestamp
 

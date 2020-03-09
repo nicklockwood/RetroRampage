@@ -6,20 +6,28 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
+public enum WorldAction {
+    case loadLevel(Int)
+}
+
 public struct World {
     public private(set) var map: Tilemap
     public private(set) var doors: [Door]
     public private(set) var pushwalls: [Pushwall]
+    public private(set) var switches: [Switch]
     public private(set) var monsters: [Monster]
     public private(set) var player: Player!
     public private(set) var effects: [Effect]
+    public private(set) var isLevelEnded: Bool
 
     public init(map: Tilemap) {
         self.map = map
         self.doors = []
         self.pushwalls = []
+        self.switches = []
         self.monsters = []
         self.effects = []
+        self.isLevelEnded = false
         reset()
     }
 }
@@ -29,7 +37,7 @@ public extension World {
         return map.size
     }
 
-    mutating func update(timeStep: Double, input: Input) {
+    mutating func update(timeStep: Double, input: Input) -> WorldAction? {
         // Update effects
         effects = effects.compactMap { effect in
             guard effect.time < effect.duration else {
@@ -40,6 +48,15 @@ public extension World {
             return effect
         }
 
+        // Check for level end
+        if isLevelEnded {
+            if effects.isEmpty {
+                effects.append(Effect(type: .fadeIn, color: .black, duration: 0.5))
+                return .loadLevel(map.index + 1)
+            }
+            return nil
+        }
+
         // Update player
         if player.isDead == false {
             var player = self.player!
@@ -48,9 +65,10 @@ public extension World {
             player.position += player.velocity * timeStep
             self.player = player
         } else if effects.isEmpty {
+            player = nil
             reset()
             effects.append(Effect(type: .fadeIn, color: .red, duration: 0.5))
-            return
+            return nil
         }
 
         // Update monsters
@@ -78,6 +96,14 @@ public extension World {
             pushwalls[i] = pushwall
         }
 
+        // Update switches
+        for i in 0 ..< switches.count {
+            var s = switches[i]
+            s.animation.time += timeStep
+            s.update(in: &self)
+            switches[i] = s
+        }
+
         // Handle collisions
         for i in 0 ..< monsters.count {
             var monster = monsters[i]
@@ -103,6 +129,8 @@ public extension World {
         for i in 0 ..< monsters.count where monsters[i].isStuck(in: self) {
             hurtMonster(at: i, damage: 1)
         }
+
+        return nil
     }
 
     var sprites: [Billboard] {
@@ -141,9 +169,22 @@ public extension World {
         monsters[index] = monster
     }
 
+    mutating func endLevel() {
+        isLevelEnded = true
+        effects.append(Effect(type: .fadeOut, color: .black, duration: 2))
+    }
+
+    mutating func setLevel(_ map: Tilemap) {
+        let effects = self.effects
+        self = World(map: map)
+        self.effects = effects
+    }
+
     mutating func reset() {
         self.monsters = []
         self.doors = []
+        self.switches = []
+        self.isLevelEnded = false
         var pushwallCount = 0
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
@@ -174,6 +215,9 @@ public extension World {
                         tile = map.closestFloorTile(to: x, y) ?? .wall
                     }
                     pushwalls.append(Pushwall(position: position, tile: tile))
+                case .switch:
+                    precondition(map[x, y].isWall, "Switch must be placed on a wall tile")
+                    switches.append(Switch(position: position))
                 }
             }
         }
@@ -218,5 +262,14 @@ public extension World {
 
     func isDoor(at x: Int, _ y: Int) -> Bool {
         return map.things[y * map.width + x] == .door
+    }
+
+    func `switch`(at x: Int, _ y: Int) -> Switch? {
+        guard map.things[y * map.width + x] == .switch else {
+            return nil
+        }
+        return switches.first(where: {
+            Int($0.position.x) == x && Int($0.position.y) == y
+        })
     }
 }

@@ -15,6 +15,7 @@
 		012A0CA222D7AD0A0068E8EF /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012A0CA122D7AD0A0068E8EF /* Animation.swift */; };
 		012DF10822E251CF00D52706 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012DF10722E251CF00D52706 /* Effect.swift */; };
 		01467C3E22E6F54600B5607D /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01467C3D22E6F54600B5607D /* Easing.swift */; };
+		015A23C9230586E3004CBB78 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015A23C8230586E3004CBB78 /* Switch.swift */; };
 		016E41B3228E9A5B00ACF137 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E41B2228E9A5B00ACF137 /* AppDelegate.swift */; };
 		016E41B5228E9A5B00ACF137 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016E41B4228E9A5B00ACF137 /* ViewController.swift */; };
 		016E41B8228E9A5B00ACF137 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 016E41B6228E9A5B00ACF137 /* Main.storyboard */; };
@@ -31,7 +32,7 @@
 		01D09AFB22A485040052745A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AFA22A485040052745A /* Player.swift */; };
 		01D09AFD22A4873B0052745A /* Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AFC22A4873B0052745A /* Rect.swift */; };
 		01D09AFF22A48E990052745A /* Tilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09AFE22A48E990052745A /* Tilemap.swift */; };
-		01D09B0122A493A70052745A /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 01D09B0022A493A70052745A /* Map.json */; };
+		01D09B0122A493A70052745A /* Levels.json in Resources */ = {isa = PBXBuildFile; fileRef = 01D09B0022A493A70052745A /* Levels.json */; };
 		01D09B0322A4958E0052745A /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0222A4958E0052745A /* Input.swift */; };
 		01D09B0522A5C9DB0052745A /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0422A5C9DB0052745A /* Ray.swift */; };
 		01D09B0722A6E09B0052745A /* Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0622A6E09A0052745A /* Rotation.swift */; };
@@ -81,6 +82,7 @@
 		012A0CA122D7AD0A0068E8EF /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		012DF10722E251CF00D52706 /* Effect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		01467C3D22E6F54600B5607D /* Easing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Easing.swift; sourceTree = "<group>"; };
+		015A23C8230586E3004CBB78 /* Switch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
 		016E41AF228E9A5B00ACF137 /* Rampage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rampage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		016E41B2228E9A5B00ACF137 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		016E41B4228E9A5B00ACF137 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,7 +101,7 @@
 		01D09AFA22A485040052745A /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		01D09AFC22A4873B0052745A /* Rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rect.swift; sourceTree = "<group>"; };
 		01D09AFE22A48E990052745A /* Tilemap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tilemap.swift; sourceTree = "<group>"; };
-		01D09B0022A493A70052745A /* Map.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Map.json; sourceTree = "<group>"; };
+		01D09B0022A493A70052745A /* Levels.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Levels.json; sourceTree = "<group>"; };
 		01D09B0222A4958E0052745A /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		01D09B0422A5C9DB0052745A /* Ray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
 		01D09B0622A6E09A0052745A /* Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rotation.swift; sourceTree = "<group>"; };
@@ -164,7 +166,7 @@
 				016E41B4228E9A5B00ACF137 /* ViewController.swift */,
 				01D09AF422A482450052745A /* UIImage+Bitmap.swift */,
 				016E41B6228E9A5B00ACF137 /* Main.storyboard */,
-				01D09B0022A493A70052745A /* Map.json */,
+				01D09B0022A493A70052745A /* Levels.json */,
 				016E41B9228E9A5E00ACF137 /* Assets.xcassets */,
 				016E41BB228E9A5E00ACF137 /* LaunchScreen.storyboard */,
 				016E41BE228E9A5E00ACF137 /* Info.plist */,
@@ -191,6 +193,7 @@
 				01D09AFC22A4873B0052745A /* Rect.swift */,
 				01ADC63B22B957FD00DC8AAD /* Renderer.swift */,
 				01D09B0622A6E09A0052745A /* Rotation.swift */,
+				015A23C8230586E3004CBB78 /* Switch.swift */,
 				01D09B0A22A7F7570052745A /* Textures.swift */,
 				012A0C4C22C96E150068E8EF /* Tile.swift */,
 				01D09AFE22A48E990052745A /* Tilemap.swift */,
@@ -329,7 +332,7 @@
 			files = (
 				016E41BD228E9A5E00ACF137 /* LaunchScreen.storyboard in Resources */,
 				016E41BA228E9A5E00ACF137 /* Assets.xcassets in Resources */,
-				01D09B0122A493A70052745A /* Map.json in Resources */,
+				01D09B0122A493A70052745A /* Levels.json in Resources */,
 				016E41B8228E9A5B00ACF137 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +371,7 @@
 				012DF10822E251CF00D52706 /* Effect.swift in Sources */,
 				012A0C6322CC200E0068E8EF /* Monster.swift in Sources */,
 				01D09B0B22A7F7570052745A /* Textures.swift in Sources */,
+				015A23C9230586E3004CBB78 /* Switch.swift in Sources */,
 				01D09AFF22A48E990052745A /* Tilemap.swift in Sources */,
 				01D09AFD22A4873B0052745A /* Rect.swift in Sources */,
 				01ADC63C22B957FD00DC8AAD /* Renderer.swift in Sources */,

@@ -22,6 +22,8 @@ public enum Texture: String, CaseIterable {
     case monsterHurt, monsterDeath1, monsterDeath2, monsterDead
     case pistol
     case pistolFire1, pistolFire2, pistolFire3, pistolFire4
+    case switch1, switch2, switch3, switch4
+    case elevatorFloor, elevatorCeiling, elevatorSideWall, elevatorBackWall
 }
 
 public struct Textures {
