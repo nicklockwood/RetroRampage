@@ -50,6 +50,7 @@ func setUpAudio() {
 }
 
 class ViewController: UIViewController {
+    private let gameControllerManager = GameControllerManager()
     private let imageView = UIImageView()
     private let panGesture = UIPanGestureRecognizer()
     private let tapGesture = UITapGestureRecognizer()
@@ -120,6 +121,11 @@ class ViewController: UIViewController {
         )
         lastFrameTime = displayLink.timestamp
         lastFiredTime = min(lastFiredTime, lastFrameTime)
+
+        if let controllerInput = gameControllerManager.input(turningSpeed:
+            game.world.player.turningSpeed, worldTimeStep: worldTimeStep) {
+            input = controllerInput
+        }
 
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {

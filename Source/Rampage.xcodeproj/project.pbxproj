@@ -70,6 +70,8 @@
 		01DD25AC244FA85E00D00FE5 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DD25AB244FA85E00D00FE5 /* Font.swift */; };
 		01E3963A2342758D00D02236 /* Pushwall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E396392342758D00D02236 /* Pushwall.swift */; };
 		01EDA5DB2444DC2C00FC1795 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EDA5DA2444DC2B00FC1795 /* Game.swift */; };
+		D5AA3B932427B3E5004908CD /* GameControllerManager+Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AA3B912427B3E5004908CD /* GameControllerManager+Input.swift */; };
+		D5AA3B942427B3E5004908CD /* GameControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AA3B922427B3E5004908CD /* GameControllerManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +188,8 @@
 		01DD25AB244FA85E00D00FE5 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		01E396392342758D00D02236 /* Pushwall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pushwall.swift; sourceTree = "<group>"; };
 		01EDA5DA2444DC2B00FC1795 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		D5AA3B912427B3E5004908CD /* GameControllerManager+Input.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameControllerManager+Input.swift"; sourceTree = "<group>"; };
+		D5AA3B922427B3E5004908CD /* GameControllerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameControllerManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,6 +274,8 @@
 				016E41B4228E9A5B00ACF137 /* ViewController.swift */,
 				01D09AF422A482450052745A /* UIImage+Bitmap.swift */,
 				0199F57323E242D4003E3F08 /* SoundManager.swift */,
+				D5AA3B922427B3E5004908CD /* GameControllerManager.swift */,
+				D5AA3B912427B3E5004908CD /* GameControllerManager+Input.swift */,
 				016E41B6228E9A5B00ACF137 /* Main.storyboard */,
 				01D09B0022A493A70052745A /* Levels.json */,
 				01DD25A9244FA74900D00FE5 /* Font.json */,
@@ -565,6 +571,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				01D09AF522A482450052745A /* UIImage+Bitmap.swift in Sources */,
+				D5AA3B942427B3E5004908CD /* GameControllerManager.swift in Sources */,
+				D5AA3B932427B3E5004908CD /* GameControllerManager+Input.swift in Sources */,
 				0199F57423E242D4003E3F08 /* SoundManager.swift in Sources */,
 				016E41B5228E9A5B00ACF137 /* ViewController.swift in Sources */,
 				016E41B3228E9A5B00ACF137 /* AppDelegate.swift in Sources */,
