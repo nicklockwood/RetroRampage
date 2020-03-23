@@ -82,6 +82,8 @@ class ViewController: UIViewController {
         game.delegate = self
     }
 
+#if os(iOS)
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .landscape
     }
@@ -93,6 +95,8 @@ class ViewController: UIViewController {
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
+
+#endif
 
     private var inputVector: Vector {
         switch panGesture.state {
@@ -133,7 +137,11 @@ class ViewController: UIViewController {
             input.isFiring = false
         }
 
-        let width = Int(imageView.bounds.width), height = Int(imageView.bounds.height)
+        let maxHeight = 480
+        let height = min(maxHeight, Int(imageView.bounds.height))
+        let aspectRatio = imageView.bounds.width / imageView.bounds.height
+        let width = Int(CGFloat(height) * aspectRatio)
+
         var renderer = Renderer(width: width, height: height, textures: textures)
         let insets = self.view.safeAreaInsets
         renderer.safeArea = Rect(
