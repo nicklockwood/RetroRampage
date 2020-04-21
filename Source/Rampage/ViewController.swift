@@ -128,15 +128,21 @@ class ViewController: UIViewController {
         lastFrameTime = displayLink.timestamp
 
         let width = Int(imageView.bounds.width), height = Int(imageView.bounds.height)
-        var renderer = Renderer(width: width, height: height, textures: textures)
         let insets = self.view.safeAreaInsets
-        renderer.safeArea = Rect(
-            min: Vector(x: Double(insets.left), y: Double(insets.top)),
-            max: renderer.bitmap.size - Vector(x: Double(insets.left), y: Double(insets.bottom))
+        let bitmap = Bitmap(
+            width: width,
+            height: height,
+            safeArea: Rect(
+                min: Vector(x: Double(insets.left), y: Double(insets.top)),
+                max: Vector(
+                    x: Double(width) - Double(insets.left),
+                    y: Double(height) - Double(insets.bottom)
+                )
+            ),
+            world: world,
+            textures: textures
         )
-        renderer.draw(world)
-
-        imageView.image = UIImage(bitmap: renderer.bitmap)
+        imageView.image = UIImage(bitmap: bitmap)
     }
 
     @objc func fire(_ gestureRecognizer: UITapGestureRecognizer) {

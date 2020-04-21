@@ -64,6 +64,7 @@
 		01D0F5D922F80E1600682CA1 /* RampageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F5D822F80E1600682CA1 /* RampageTests.swift */; };
 		01D0F5F122FF095E00682CA1 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F5F022FF095E00682CA1 /* Door.swift */; };
 		01E3963A2342758D00D02236 /* Pushwall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E396392342758D00D02236 /* Pushwall.swift */; };
+		01D0F5EF22FDF19A00682CA1 /* Bitmap+Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F5EE22FDF19900682CA1 /* Bitmap+Rendering.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +175,7 @@
 		01D0F5DA22F80E1600682CA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01D0F5F022FF095E00682CA1 /* Door.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Door.swift; sourceTree = "<group>"; };
 		01E396392342758D00D02236 /* Pushwall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pushwall.swift; sourceTree = "<group>"; };
+		01D0F5EE22FDF19900682CA1 /* Bitmap+Rendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bitmap+Rendering.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +258,7 @@
 			children = (
 				016E41B2228E9A5B00ACF137 /* AppDelegate.swift */,
 				016E41B4228E9A5B00ACF137 /* ViewController.swift */,
+				01D0F5EE22FDF19900682CA1 /* Bitmap+Rendering.swift */,
 				01D09AF422A482450052745A /* UIImage+Bitmap.swift */,
 				0199F57323E242D4003E3F08 /* SoundManager.swift */,
 				016E41B6228E9A5B00ACF137 /* Main.storyboard */,
@@ -544,6 +547,7 @@
 			files = (
 				01D09AF522A482450052745A /* UIImage+Bitmap.swift in Sources */,
 				0199F57423E242D4003E3F08 /* SoundManager.swift in Sources */,
+				01D0F5EF22FDF19A00682CA1 /* Bitmap+Rendering.swift in Sources */,
 				016E41B5228E9A5B00ACF137 /* ViewController.swift in Sources */,
 				016E41B3228E9A5B00ACF137 /* AppDelegate.swift in Sources */,
 			);

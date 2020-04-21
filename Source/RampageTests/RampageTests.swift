@@ -17,8 +17,7 @@ class RampageTests: XCTestCase {
 
     func testRenderFrame() {
         self.measure {
-            var renderer = Renderer(width: 1000, height: 1000, textures: textures)
-            renderer.draw(world)
+            _ = Bitmap(width: 1000, height: 1000, world: world, textures: textures)
         }
     }
 }
