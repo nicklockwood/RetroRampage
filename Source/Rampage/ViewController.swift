@@ -72,6 +72,14 @@ class ViewController: UIViewController {
         tapGesture.delegate = self
     }
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .landscape
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
     private var inputVector: Vector {
         switch panGesture.state {
         case .began, .changed:
@@ -129,6 +137,11 @@ class ViewController: UIViewController {
 
         let width = Int(imageView.bounds.width), height = Int(imageView.bounds.height)
         var renderer = Renderer(width: width, height: height, textures: textures)
+        let insets = self.view.safeAreaInsets
+        renderer.safeArea = Rect(
+            min: Vector(x: Double(insets.left), y: Double(insets.top)),
+            max: renderer.bitmap.size - Vector(x: Double(insets.left), y: Double(insets.bottom))
+        )
         renderer.draw(world)
 
         imageView.image = UIImage(bitmap: renderer.bitmap)

@@ -28,4 +28,8 @@ public enum Texture: String, CaseIterable {
     case switch1, switch2, switch3, switch4
     case elevatorFloor, elevatorCeiling, elevatorSideWall, elevatorBackWall
     case medkit
+    case crosshair
+    case healthIcon
+    case pistolIcon, shotgunIcon
+    case font
 }
