@@ -25,8 +25,7 @@ public extension Color {
     static let clear = Color(r: 0, g: 0, b: 0, a: 0)
     static let black = Color(r: 0, g: 0, b: 0)
     static let white = Color(r: 255, g: 255, b: 255)
-    static let gray = Color(r: 192, g: 192, b: 192)
-    static let red = Color(r: 255, g: 0, b: 0)
-    static let green = Color(r: 0, g: 255, b: 0)
-    static let blue = Color(r: 0, g: 0, b: 255)
+    static let red = Color(r: 217, g: 87, b: 99)
+    static let green = Color(r: 153, g: 229, b: 80)
+    static let yellow = Color(r: 251, g: 242, b: 54)
 }
