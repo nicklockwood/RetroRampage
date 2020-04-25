@@ -6,7 +6,7 @@
 //  Copyright © 2020 Nick Lockwood. All rights reserved.
 //
 
-public enum PickupType {
+public enum PickupType: Int, Codable {
     case medkit
     case shotgun
 }

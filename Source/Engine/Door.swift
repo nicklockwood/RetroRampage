@@ -6,14 +6,14 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public enum DoorState {
+public enum DoorState: Int, Codable {
     case closed
     case opening
     case open
     case closing
 }
 
-public struct Door {
+public struct Door: Codable {
     public let duration: Double = 0.5
     public let closeDelay: Double = 3
     public let position: Vector

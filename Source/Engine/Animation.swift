@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public struct Animation {
+public struct Animation: Codable {
     public let frames: [Texture]
     public let duration: Double
     public var time: Double = 0

@@ -12,7 +12,7 @@ public struct MapData: Decodable {
     fileprivate let width: Int
 }
 
-public struct Tilemap {
+public struct Tilemap: Codable {
     private(set) var tiles: [Tile]
     public let things: [Thing]
     public let width: Int
