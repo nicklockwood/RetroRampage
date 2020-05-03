@@ -6,11 +6,6 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public enum PlayerState {
-    case idle
-    case firing
-}
-
 public struct Player: Actor {
     public let speed: Double = 2
     public let turningSpeed: Double = .pi
@@ -19,10 +14,9 @@ public struct Player: Actor {
     public var velocity: Vector
     public var direction: Vector
     public var health: Double
-    public var state: PlayerState = .idle
-    public private(set) var weapon: Weapon = .pistol
+    public var leftWeapon: Weapon?
+    public var rightWeapon: Weapon = Weapon(type: .pistol)
     public private(set) var ammo: Double
-    public var animation: Animation
     public let soundChannel: Int
 
     public init(position: Vector, soundChannel: Int) {
@@ -31,8 +25,7 @@ public struct Player: Actor {
         self.direction = Vector(x: 1, y: 0)
         self.health = 100
         self.soundChannel = soundChannel
-        self.animation = weapon.attributes.idleAnimation
-        self.ammo = weapon.attributes.defaultAmmo
+        self.ammo = rightWeapon.attributes.defaultAmmo
     }
 }
 
@@ -45,27 +38,25 @@ public extension Player {
         return velocity.x != 0 || velocity.y != 0
     }
 
-    var canFire: Bool {
-        guard ammo > 0 else {
-            return false
-        }
-        switch state {
-        case .idle:
-            return true
-        case .firing:
-            return animation.time >= weapon.attributes.cooldown
-        }
+    var isFiring: Bool {
+        return rightWeapon.state == .firing || leftWeapon?.state == .firing
     }
 
-    mutating func setWeapon(_ weapon: Weapon) {
-        self.weapon = weapon
-        animation = weapon.attributes.idleAnimation
-        ammo = weapon.attributes.defaultAmmo
+    mutating func setWeapon(_ weapon: WeaponType) {
+        if rightWeapon.type == weapon {
+            leftWeapon = Weapon(type: weapon)
+            ammo += weapon.attributes.defaultAmmo
+        } else {
+            rightWeapon = Weapon(type: weapon)
+            leftWeapon = nil
+            ammo = weapon.attributes.defaultAmmo
+        }
     }
 
     mutating func inherit(from player: Player) {
         health = player.health
-        setWeapon(player.weapon)
+        rightWeapon = Weapon(type: player.rightWeapon.type)
+        leftWeapon = player.leftWeapon.map { Weapon(type: $0.type) }
         ammo = player.ammo
     }
 
@@ -73,22 +64,20 @@ public extension Player {
         let wasMoving = isMoving
         direction = direction.rotated(by: input.rotation)
         velocity = direction * input.speed * speed
-        if input.isFiring, canFire {
-            state = .firing
+        if input.isFiring, ammo > 0, rightWeapon.fire() || leftWeapon?.fire() == true {
             ammo -= 1
-            animation = weapon.attributes.fireAnimation
-            world.playSound(weapon.attributes.fireSound, at: position)
-            let projectiles = weapon.attributes.projectiles
+            world.playSound(rightWeapon.attributes.fireSound, at: position)
+            let projectiles = rightWeapon.attributes.projectiles
             var hitPosition, missPosition: Vector?
             for _ in 0 ..< projectiles {
-                let spread = weapon.attributes.spread
+                let spread = rightWeapon.attributes.spread
                 let sine = Double.random(in: -spread ... spread)
                 let cosine = (1 - sine * sine).squareRoot()
                 let rotation = Rotation(sine: sine, cosine: cosine)
                 let direction = self.direction.rotated(by: rotation)
                 let ray = Ray(origin: position, direction: direction)
                 if let index = world.pickMonster(ray) {
-                    let damage = weapon.attributes.damage / Double(projectiles)
+                    let damage = rightWeapon.attributes.damage / Double(projectiles)
                     world.hurtMonster(at: index, damage: damage)
                     hitPosition = world.monsters[index].position
                 } else {
@@ -102,16 +91,15 @@ public extension Player {
                 world.playSound(.ricochet, at: missPosition)
             }
         }
-        switch state {
-        case .idle:
-            if ammo == 0 {
-                setWeapon(.pistol)
-            }
-        case .firing:
-            if animation.isCompleted {
-                state = .idle
-                animation = weapon.attributes.idleAnimation
-            }
+        leftWeapon?.update(in: &world)
+        if ammo < 2, leftWeapon?.state != .firing {
+            leftWeapon = nil
+        }
+        rightWeapon.update(in: &world)
+        if ammo == 0, rightWeapon.state == .idle, leftWeapon == nil {
+            rightWeapon = Weapon(type: .pistol)
+            leftWeapon = nil
+            ammo = rightWeapon.attributes.defaultAmmo
         }
         if isMoving, !wasMoving {
             world.playSound(.playerWalk, at: position, in: soundChannel)

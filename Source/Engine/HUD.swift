@@ -10,7 +10,8 @@ public struct HUD {
     public let healthString: String
     public let healthTint: Color
     public let ammoString: String
-    public let playerWeapon: Texture
+    public let rightWeapon: Texture
+    public let leftWeapon: Texture?
     public let weaponIcon: Texture
     public let font: Font
 
@@ -26,8 +27,9 @@ public struct HUD {
         }
         self.healthString = String(health)
         self.ammoString = String(Int(max(0, min(99, player.ammo))))
-        self.playerWeapon = player.animation.texture
-        self.weaponIcon = player.weapon.attributes.hudIcon
+        self.rightWeapon = player.rightWeapon.animation.texture
+        self.leftWeapon = player.leftWeapon.map { $0.animation.texture }
+        self.weaponIcon = player.rightWeapon.attributes.hudIcon
         self.font = font
     }
 }

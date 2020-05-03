@@ -115,15 +115,25 @@ public extension Bitmap {
         xRange: Range<Int>? = nil,
         at point: Vector,
         size: Vector,
+        flipped: Bool = false,
         tint: Color? = nil
     ) {
         let xRange = xRange ?? 0 ..< source.width
         let start = Int(point.x), end = Int(point.x + size.x)
         let stepX = Double(xRange.count) / size.x
-        for x in max(0, start) ..< max(0, start, min(width, end)) {
-            let sourceX = Int(max(0, Double(x) - point.x) * stepX) + xRange.lowerBound
-            let outputPosition = Vector(x: Double(x), y: point.y)
-            drawColumn(sourceX, of: source, at: outputPosition, height: size.y, tint: tint)
+        let range = max(0, start) ..< max(0, start, min(width, end))
+        if flipped {
+            for x in range {
+                let sourceX = xRange.upperBound - Int(max(0, Double(x) - point.x) * stepX)
+                let outputPosition = Vector(x: Double(x), y: point.y)
+                drawColumn(sourceX, of: source, at: outputPosition, height: size.y, tint: tint)
+            }
+        } else {
+            for x in range {
+                let sourceX = Int(max(0, Double(x) - point.x) * stepX) + xRange.lowerBound
+                let outputPosition = Vector(x: Double(x), y: point.y)
+                drawColumn(sourceX, of: source, at: outputPosition, height: size.y, tint: tint)
+            }
         }
     }
 

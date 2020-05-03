@@ -6,12 +6,12 @@
 //  Copyright © 2020 Nick Lockwood. All rights reserved.
 //
 
-public enum Weapon: Int {
+public enum WeaponType: Int {
     case pistol
     case shotgun
 }
 
-public extension Weapon {
+public extension WeaponType {
     struct Attributes {
         let idleAnimation: Animation
         let fireAnimation: Animation
@@ -75,4 +75,56 @@ public extension Animation {
         .shotgunFire4,
         .shotgun
     ], duration: 0.5)
+}
+
+public enum WeaponState {
+    case idle
+    case firing
+}
+
+public struct Weapon {
+    public var state: WeaponState = .idle
+    public let type: WeaponType
+    public var animation: Animation
+
+    public init(type: WeaponType) {
+        self.type = type
+        self.animation = type.attributes.idleAnimation
+    }
+}
+
+public extension Weapon {
+    var attributes: WeaponType.Attributes {
+        return type.attributes
+    }
+
+    var canFire: Bool {
+        switch state {
+        case .idle:
+            return true
+        case .firing:
+            return animation.time >= type.attributes.cooldown
+        }
+    }
+
+    mutating func fire() -> Bool {
+        guard canFire else {
+            return false
+        }
+        state = .firing
+        animation = type.attributes.fireAnimation
+        return true
+    }
+
+    mutating func update(in world: inout World) {
+        switch state {
+        case .idle:
+            break
+        case .firing:
+            if animation.isCompleted {
+                state = .idle
+                animation = type.attributes.idleAnimation
+            }
+        }
+    }
 }

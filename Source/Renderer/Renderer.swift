@@ -179,11 +179,20 @@ public extension Renderer {
     }
 
     mutating func draw(_ hud: HUD) {
-        // Player weapon
-        let weaponTexture = textures[hud.playerWeapon]
+        // Right weapon
+        let weaponTexture = textures[hud.rightWeapon]
         let weaponScale = bitmap.size.y / weaponTexture.size.y
         let weaponSize = weaponTexture.size * weaponScale
         bitmap.drawImage(weaponTexture, at: (bitmap.size - weaponSize) / 2, size: weaponSize)
+
+        // Left weapon
+        if let leftWeapon = hud.leftWeapon {
+            let weaponTexture = textures[leftWeapon]
+            let weaponScale = bitmap.size.y / weaponTexture.size.y
+            let weaponSize = weaponTexture.size * weaponScale
+            bitmap.drawImage(weaponTexture, at: (bitmap.size - weaponSize) / 2, size: weaponSize,
+                             flipped: true)
+        }
 
         // Crosshair
         let crosshair = textures[.crosshair]
