@@ -23,6 +23,58 @@ public struct Renderer {
 }
 
 public extension Renderer {
+    mutating func draw(_ game: Game) {
+        switch game.state {
+        case .title, .starting:
+            // Background
+            let background = textures[.titleBackground]
+            let backgroundScale = bitmap.size.y / background.size.y
+            let backgroundSize = background.size * backgroundScale
+            let backgroundPosition = (bitmap.size - backgroundSize) / 2
+            bitmap.drawImage(background, at: backgroundPosition, size: backgroundSize)
+            
+            // Logo
+            let logo = textures[.titleLogo]
+            let logoScale = bitmap.size.y / logo.size.y / 2
+            let logoSize = logo.size * logoScale
+            let logoPosition = Vector(x: (bitmap.size.x - logoSize.x) / 2, y: bitmap.size.y * 0.15)
+            bitmap.drawImage(logo, at: logoPosition, size: logoSize)
+
+            // Text
+            let textScale = bitmap.size.y / 64
+            let font = textures[game.font.texture]
+            let charSize = Vector(x: Double(font.width / game.font.characters.count), y: font.size.y)
+            let textWidth = charSize.x * Double(game.titleText.count) * textScale
+            var offset = Vector(x: (bitmap.size.x - textWidth) / 2, y: bitmap.size.y * 0.75)
+            for char in game.titleText {
+                let index = game.font.characters.firstIndex(of: String(char)) ?? 0
+                let step = Int(charSize.x)
+                let xRange = index * step ..< (index + 1) * step
+                bitmap.drawImage(
+                    font,
+                    xRange: xRange,
+                    at: offset,
+                    size: charSize * textScale,
+                    tint: .yellow
+                )
+                offset.x += charSize.x * textScale
+            }
+        case .playing:
+            draw(game.world)
+            draw(game.hud)
+
+            // Effects
+            for effect in game.world.effects {
+                draw(effect)
+            }
+        }
+
+        // Transition
+        if let effect = game.transition {
+            draw(effect)
+        }
+    }
+
     mutating func draw(_ world: World) {
         let focalLength = 1.0
         let viewWidth = Double(bitmap.width) / Double(bitmap.height)
@@ -124,17 +176,14 @@ public extension Renderer {
 
             columnPosition += step
         }
+    }
 
+    mutating func draw(_ hud: HUD) {
         // Player weapon
-        let weaponTexture = textures[world.player.animation.texture]
-        let aspectRatio = Double(weaponTexture.width) / Double(weaponTexture.height)
-        let screenHeight = Double(bitmap.height)
-        let weaponWidth = screenHeight * aspectRatio
-        bitmap.drawImage(
-            weaponTexture,
-            at: Vector(x: Double(bitmap.width) / 2 - weaponWidth / 2, y: 0),
-            size: Vector(x: weaponWidth, y: screenHeight)
-        )
+        let weaponTexture = textures[hud.playerWeapon]
+        let weaponScale = bitmap.size.y / weaponTexture.size.y
+        let weaponSize = weaponTexture.size * weaponScale
+        bitmap.drawImage(weaponTexture, at: (bitmap.size - weaponSize) / 2, size: weaponSize)
 
         // Crosshair
         let crosshair = textures[.crosshair]
@@ -149,20 +198,11 @@ public extension Renderer {
         offset.x += healthIcon.size.x * hudScale
 
         // Health
-        let font = textures[.font]
-        let charSize = Vector(x: font.size.x / 10, y: font.size.y)
-        let health = Int(max(0, world.player.health))
-        let healthTint: Color
-        switch health {
-        case ...10:
-            healthTint = .red
-        case 10 ... 30:
-            healthTint = .yellow
-        default:
-            healthTint = .green
-        }
-        for char in String(health) {
-            let index = Int(char.asciiValue!) - 48
+        let font = textures[hud.font.texture]
+        let charSize = Vector(x: Double(font.width / hud.font.characters.count), y: font.size.y)
+        let healthTint = hud.healthTint
+        for char in hud.healthString {
+            let index = hud.font.characters.firstIndex(of: String(char)) ?? 0
             let step = Int(charSize.x)
             let xRange = index * step ..< (index + 1) * step
             bitmap.drawImage(
@@ -177,9 +217,8 @@ public extension Renderer {
 
         // Ammunition
         offset.x = safeArea.max.x
-        let ammo = Int(max(0, min(99, world.player.ammo)))
-        for char in String(ammo).reversed() {
-            let index = Int(char.asciiValue!) - 48
+        for char in hud.ammoString.reversed() {
+            let index = hud.font.characters.firstIndex(of: String(char)) ?? 0
             let step = Int(charSize.x)
             let xRange = index * step ..< (index + 1) * step
             offset.x -= charSize.x * hudScale
@@ -187,27 +226,26 @@ public extension Renderer {
         }
 
         // Weapon icon
-        let weaponIcon = textures[world.player.weapon.attributes.hudIcon]
+        let weaponIcon = textures[hud.weaponIcon]
         offset.x -= weaponIcon.size.x * hudScale
         bitmap.drawImage(weaponIcon, at: offset, size: weaponIcon.size * hudScale)
+    }
 
-        // Effects
-        for effect in world.effects {
-            switch effect.type {
-            case .fadeIn:
-                bitmap.tint(with: effect.color, opacity: 1 - effect.progress)
-            case .fadeOut:
-                bitmap.tint(with: effect.color, opacity: effect.progress)
-            case .fizzleOut:
-                let threshold = Int(effect.progress * Double(fizzle.count))
-                for x in 0 ..< bitmap.width {
-                    for y in 0 ..< bitmap.height {
-                        let granularity = 4
-                        let index = y / granularity * bitmap.width + x / granularity
-                        let fizzledIndex = fizzle[index % fizzle.count]
-                        if fizzledIndex <= threshold {
-                            bitmap[x, y] = effect.color
-                        }
+    mutating func draw(_ effect: Effect) {
+        switch effect.type {
+        case .fadeIn:
+            bitmap.tint(with: effect.color, opacity: 1 - effect.progress)
+        case .fadeOut:
+            bitmap.tint(with: effect.color, opacity: effect.progress)
+        case .fizzleOut:
+            let threshold = Int(effect.progress * Double(fizzle.count))
+            for x in 0 ..< bitmap.width {
+                for y in 0 ..< bitmap.height {
+                    let granularity = 4
+                    let index = y / granularity * bitmap.width + x / granularity
+                    let fizzledIndex = fizzle[index % fizzle.count]
+                    if fizzledIndex <= threshold {
+                        bitmap[x, y] = effect.color
                     }
                 }
             }

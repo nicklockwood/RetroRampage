@@ -21,6 +21,12 @@ public func loadLevels() -> [Tilemap] {
     return levels.enumerated().map { Tilemap($0.element, index: $0.offset) }
 }
 
+public func loadFont() -> Font {
+    let jsonURL = Bundle.main.url(forResource: "Font", withExtension: "json")!
+    let jsonData = try! Data(contentsOf: jsonURL)
+    return try! JSONDecoder().decode(Font.self, from: jsonData)
+}
+
 public func loadTextures() -> Textures {
     return Textures(loader: { name in
         Bitmap(image: UIImage(named: name)!)!
@@ -46,8 +52,7 @@ class ViewController: UIViewController {
     private let panGesture = UIPanGestureRecognizer()
     private let tapGesture = UITapGestureRecognizer()
     private let textures = loadTextures()
-    private let levels = loadLevels()
-    private lazy var world = World(map: levels[0])
+    private var game = Game(levels: loadLevels(), font: loadFont())
     private var lastFrameTime = CACurrentMediaTime()
     private var lastFiredTime = 0.0
 
@@ -70,6 +75,8 @@ class ViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
         tapGesture.addTarget(self, action: #selector(fire))
         tapGesture.delegate = self
+
+        game.delegate = self
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -77,6 +84,10 @@ class ViewController: UIViewController {
     }
 
     override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
+    override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
 
@@ -99,41 +110,20 @@ class ViewController: UIViewController {
     @objc func update(_ displayLink: CADisplayLink) {
         let timeStep = min(maximumTimeStep, displayLink.timestamp - lastFrameTime)
         let inputVector = self.inputVector
-        let rotation = inputVector.x * world.player.turningSpeed * worldTimeStep
-        let input = Input(
+        let rotation = inputVector.x * game.world.player.turningSpeed * worldTimeStep
+        var input = Input(
             speed: -inputVector.y,
             rotation: Rotation(sine: sin(rotation), cosine: cos(rotation)),
             isFiring: lastFiredTime > lastFrameTime
         )
+        lastFrameTime = displayLink.timestamp
+        lastFiredTime = min(lastFiredTime, lastFrameTime)
+
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
-            if let action = world.update(timeStep: timeStep / worldSteps, input: input) {
-                switch action {
-                case .loadLevel(let index):
-                    SoundManager.shared.clearAll()
-                    let index = index % levels.count
-                    world.setLevel(levels[index])
-                case .playSounds(let sounds):
-                    for sound in sounds {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + sound.delay) {
-                            guard let url = sound.name?.url else {
-                                if let channel = sound.channel {
-                                    SoundManager.shared.clearChannel(channel)
-                                }
-                                return
-                            }
-                            try? SoundManager.shared.play(
-                                url,
-                                channel: sound.channel,
-                                volume: sound.volume,
-                                pan: sound.pan
-                            )
-                        }
-                    }
-                }
-            }
+            game.update(timeStep: timeStep / worldSteps, input: input)
+            input.isFiring = false
         }
-        lastFrameTime = displayLink.timestamp
 
         let width = Int(imageView.bounds.width), height = Int(imageView.bounds.height)
         var renderer = Renderer(width: width, height: height, textures: textures)
@@ -142,7 +132,7 @@ class ViewController: UIViewController {
             min: Vector(x: Double(insets.left), y: Double(insets.top)),
             max: renderer.bitmap.size - Vector(x: Double(insets.left), y: Double(insets.bottom))
         )
-        renderer.draw(world)
+        renderer.draw(game)
 
         imageView.image = UIImage(bitmap: renderer.bitmap)
     }
@@ -170,5 +160,28 @@ extension ViewController: UIGestureRecognizerDelegate {
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
     ) -> Bool {
         return true
+    }
+}
+
+extension ViewController: GameDelegate {
+    func playSound(_ sound: Sound) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + sound.delay) {
+            guard let url = sound.name?.url else {
+                if let channel = sound.channel {
+                    SoundManager.shared.clearChannel(channel)
+                }
+                return
+            }
+            try? SoundManager.shared.play(
+                url,
+                channel: sound.channel,
+                volume: sound.volume,
+                pan: sound.pan
+            )
+        }
+    }
+
+    func clearSounds() {
+        SoundManager.shared.clearAll()
     }
 }
