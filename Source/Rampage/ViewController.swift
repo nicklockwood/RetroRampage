@@ -18,7 +18,9 @@ public func loadLevels() -> [Tilemap] {
     let jsonURL = Bundle.main.url(forResource: "Levels", withExtension: "json")!
     let jsonData = try! Data(contentsOf: jsonURL)
     let levels = try! JSONDecoder().decode([MapData].self, from: jsonData)
-    return levels.enumerated().map { Tilemap($0.element, index: $0.offset) }
+    return levels.enumerated().map { index, mapData in
+        MapGenerator(mapData: mapData, index: index).map
+    }
 }
 
 public func loadFont() -> Font {
