@@ -107,9 +107,14 @@ public extension Renderer {
             let tile = world.map[tileX, tileY]
             if end.x.rounded(.down) == end.x {
                 let neighborX = tileX + (ray.direction.x > 0 ? -1 : 1)
-                let isDoor = world.isDoor(at: neighborX, tileY)
-                wallTexture = textures[isDoor ? .doorjamb : tile.textures[0]]
-                wallX = end.y - end.y.rounded(.down)
+                if world.map[neighborX, tileY].isWall {
+                    wallTexture = textures[tile.textures[1]]
+                    wallX = end.x - end.x.rounded(.down)
+                } else {
+                    let isDoor = world.isDoor(at: neighborX, tileY)
+                    wallTexture = textures[isDoor ? .doorjamb : tile.textures[0]]
+                    wallX = end.y - end.y.rounded(.down)
+                }
             } else {
                 let neighborY = tileY + (ray.direction.y > 0 ? -1 : 1)
                 let isDoor = world.isDoor(at: tileX, neighborY)

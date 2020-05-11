@@ -8,19 +8,24 @@
 
 public struct MapData: Decodable {
     fileprivate let tiles: [Tile]
-    fileprivate let things: [Thing]
+    fileprivate let things: [Thing]?
     fileprivate let width: Int
+    public let seed: UInt64?
+    public let monsters: Int?
+    public let medkits: Int?
+    public let shotguns: Int?
+    public let pushwalls: Int?
 }
 
 public struct Tilemap {
     private(set) var tiles: [Tile]
-    public let things: [Thing]
+    private var things: [Thing]
     public let width: Int
     public let index: Int
 
     public init(_ map: MapData, index: Int) {
         self.tiles = map.tiles
-        self.things = map.things
+        self.things = map.things ?? Array(repeating: .nothing, count: map.tiles.count)
         self.width = map.width
         self.index = index
     }
@@ -38,6 +43,11 @@ public extension Tilemap {
     subscript(x: Int, y: Int) -> Tile {
         get { return tiles[y * width + x] }
         set { tiles[y * width + x] = newValue }
+    }
+
+    subscript(thing x: Int, y: Int) -> Thing {
+        get { return things[y * width + x] }
+        set { things[y * width + x] = newValue }
     }
 
     func tileCoords(at position: Vector, from direction: Vector) -> (x: Int, y: Int) {
