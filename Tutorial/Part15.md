@@ -157,7 +157,7 @@ if world.player.intersection(with: self) != nil ||
     }) {
 ```
 
-The doors will now open if a (living) monster touches them. We'll also make it a little easier for our zombie friends by increasing the thickness of the door collision rectangle. In the computed `Rect.rect` property, replace the line:
+The doors will now open if a (living) monster touches them. We'll also make it a little easier for our zombie friends by increasing the thickness of the door collision rectangle. In the computed `Door.rect` property, replace the line:
 
 ```swift
 return Rect(min: position, max: position + direction)
