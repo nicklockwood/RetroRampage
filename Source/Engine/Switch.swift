@@ -6,12 +6,12 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public enum SwitchState {
+public enum SwitchState: Int, Codable {
     case off
     case on
 }
 
-public struct Switch {
+public struct Switch: Codable {
     public let position: Vector
     public var state: SwitchState = .off
     public var animation: Animation = .switchOff

@@ -11,7 +11,7 @@ public enum WorldAction {
     case playSounds([Sound])
 }
 
-public struct World {
+public struct World: Codable {
     public private(set) var map: Tilemap
     public private(set) var doors: [Door]
     public private(set) var pushwalls: [Pushwall]

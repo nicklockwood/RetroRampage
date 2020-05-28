@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public enum SoundName: String, CaseIterable {
+public enum SoundName: String, CaseIterable, Codable {
     case pistolFire
     case shotgunFire
     case shotgunPickup
@@ -25,7 +25,7 @@ public enum SoundName: String, CaseIterable {
     case medkit
 }
 
-public struct Sound {
+public struct Sound: Codable {
     public let name: SoundName?
     public let channel: Int?
     public let volume: Double

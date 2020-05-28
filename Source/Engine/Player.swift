@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public enum PlayerState {
+public enum PlayerState: Int, Codable {
     case idle
     case firing
 }

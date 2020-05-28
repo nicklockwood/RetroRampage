@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public struct Color {
+public struct Color: Codable {
     public var r, g, b, a: UInt8
 
     public init(r: UInt8, g: UInt8, b: UInt8, a: UInt8 = 255) {

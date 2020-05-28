@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public protocol Actor {
+public protocol Actor: Codable {
     var radius: Double { get }
     var position: Vector { get set }
     var isDead: Bool { get }

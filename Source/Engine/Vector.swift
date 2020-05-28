@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public struct Vector: Hashable {
+public struct Vector: Hashable, Codable {
     public var x, y: Double
 
     public init(x: Double, y: Double) {

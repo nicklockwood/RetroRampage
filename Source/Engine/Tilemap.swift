@@ -17,7 +17,7 @@ public struct MapData: Decodable {
     public let pushwalls: Int?
 }
 
-public struct Tilemap {
+public struct Tilemap: Codable {
     private(set) var tiles: [Tile]
     private var things: [Thing]
     public let width: Int

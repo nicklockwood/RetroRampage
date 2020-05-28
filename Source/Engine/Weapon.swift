@@ -6,7 +6,7 @@
 //  Copyright © 2020 Nick Lockwood. All rights reserved.
 //
 
-public enum Weapon: Int {
+public enum Weapon: Int, Codable {
     case pistol
     case shotgun
 }

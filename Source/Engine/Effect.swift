@@ -6,13 +6,13 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public enum EffectType {
+public enum EffectType: Int, Codable {
     case fadeIn
     case fadeOut
     case fizzleOut
 }
 
-public struct Effect {
+public struct Effect: Codable {
     public let type: EffectType
     public let color: Color
     public let duration: Double

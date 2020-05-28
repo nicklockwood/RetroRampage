@@ -17,6 +17,10 @@ public enum GameState {
     case playing
 }
 
+public struct SavedGame: Codable {
+    let world: World?
+}
+
 public struct Game {
     public weak var delegate: GameDelegate?
     public let levels: [Tilemap]
@@ -37,6 +41,24 @@ public struct Game {
 public extension Game {
     var hud: HUD {
         return HUD(player: world.player, font: font)
+    }
+
+    func save() -> SavedGame {
+        switch state {
+        case .playing:
+            return SavedGame(world: world)
+        default:
+            return SavedGame(world: nil)
+        }
+    }
+
+    mutating func load(_ savedGame: SavedGame) {
+        guard let world = savedGame.world else {
+            self.state = .title
+            return
+        }
+        self.state = .playing
+        self.world = world
     }
 
     mutating func update(timeStep: Double, input: Input) {

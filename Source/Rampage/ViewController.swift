@@ -14,6 +14,11 @@ private let joystickRadius: Double = 40
 private let maximumTimeStep: Double = 1 / 20
 private let worldTimeStep: Double = 1 / 120
 
+private let savedGameURL: URL = {
+  let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+  return documentsURL.appendingPathComponent("quicksave.plist")
+}()
+
 public func loadLevels() -> [Tilemap] {
     let jsonURL = Bundle.main.url(forResource: "Levels", withExtension: "json")!
     let jsonData = try! Data(contentsOf: jsonURL)
@@ -79,6 +84,15 @@ class ViewController: UIViewController {
         tapGesture.delegate = self
 
         game.delegate = self
+
+        try? restoreState()
+        NotificationCenter.default.addObserver(
+            forName: UIApplication.willResignActiveNotification,
+            object: nil,
+            queue: .main
+        ) { _ in
+            try? self.saveState()
+        }
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -153,6 +167,18 @@ class ViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .black
         imageView.layer.magnificationFilter = .nearest
+    }
+
+    func saveState() throws {
+        let savedGame = game.save()
+        let data = try PropertyListEncoder().encode(savedGame)
+        try data.write(to: savedGameURL, options: .atomic)
+    }
+
+    func restoreState() throws {
+        let data = try Data(contentsOf: savedGameURL)
+        let savedGame = try PropertyListDecoder().decode(SavedGame.self, from: data)
+        game.load(savedGame)
     }
 }
 
