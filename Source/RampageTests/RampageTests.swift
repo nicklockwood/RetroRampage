@@ -11,6 +11,12 @@ import Engine
 import Rampage
 import Renderer
 
+func loadTextures() -> Textures {
+    return Textures(loader: { name in
+        Bitmap(image: UIImage(named: name)!)!
+    })
+}
+
 class RampageTests: XCTestCase {
     let world = World(map: loadLevels()[0])
     let textures = loadTextures()

@@ -8,7 +8,6 @@
 
 import UIKit
 import Engine
-import Renderer
 
 private let joystickRadius: Double = 40
 private let maximumTimeStep: Double = 1 / 20
@@ -29,12 +28,6 @@ public func loadFont() -> Font {
     return try! JSONDecoder().decode(Font.self, from: jsonData)
 }
 
-public func loadTextures() -> Textures {
-    return Textures(loader: { name in
-        Bitmap(image: UIImage(named: name)!)!
-    })
-}
-
 public extension SoundName {
     var url: URL? {
         return Bundle.main.url(forResource: rawValue, withExtension: "mp3")
@@ -50,10 +43,9 @@ func setUpAudio() {
 }
 
 class ViewController: UIViewController {
-    private let imageView = UIImageView()
+    private let coreAnimationView = CoreAnimationView()
     private let panGesture = UIPanGestureRecognizer()
     private let tapGesture = UITapGestureRecognizer()
-    private let textures = loadTextures()
     private var game = Game(levels: loadLevels(), font: loadFont())
     private var lastFrameTime = CACurrentMediaTime()
     private var lastFiredTime = 0.0
@@ -66,7 +58,7 @@ class ViewController: UIViewController {
         }
 
         setUpAudio()
-        setUpImageView()
+        setUpCoreAnimationView()
 
         let displayLink = CADisplayLink(target: self, selector: #selector(update))
         displayLink.add(to: .main, forMode: .common)
@@ -127,32 +119,21 @@ class ViewController: UIViewController {
             input.isFiring = false
         }
 
-        let width = Int(imageView.bounds.width), height = Int(imageView.bounds.height)
-        var renderer = Renderer(width: width, height: height, textures: textures)
-        let insets = self.view.safeAreaInsets
-        renderer.safeArea = Rect(
-            min: Vector(x: Double(insets.left), y: Double(insets.top)),
-            max: renderer.bitmap.size - Vector(x: Double(insets.left), y: Double(insets.bottom))
-        )
-        renderer.draw(game)
-
-        imageView.image = UIImage(bitmap: renderer.bitmap)
+        coreAnimationView.draw(game)
     }
 
     @objc func fire(_ gestureRecognizer: UITapGestureRecognizer) {
         lastFiredTime = CACurrentMediaTime()
     }
 
-    func setUpImageView() {
-        view.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        imageView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .black
-        imageView.layer.magnificationFilter = .nearest
+    func setUpCoreAnimationView() {
+        view.addSubview(coreAnimationView)
+        coreAnimationView.translatesAutoresizingMaskIntoConstraints = false
+        coreAnimationView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        coreAnimationView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        coreAnimationView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        coreAnimationView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        coreAnimationView.backgroundColor = .black
     }
 }
 
