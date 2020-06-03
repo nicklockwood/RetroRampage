@@ -64,7 +64,8 @@ public extension World {
         // Update player
         if player.isDead == false {
             var player = self.player!
-            player.animation.time += timeStep
+            player.rightWeapon.animation.time += timeStep
+            player.leftWeapon?.animation.time += timeStep
             player.update(with: input, in: &self)
             player.position += player.velocity * timeStep
             self.player = player

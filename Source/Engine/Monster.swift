@@ -132,7 +132,7 @@ public extension Monster {
     }
 
     func canHearPlayer(in world: World) -> Bool {
-        guard world.player.state == .firing else {
+        guard world.player.isFiring else {
             return false
         }
         return world.findPath(
