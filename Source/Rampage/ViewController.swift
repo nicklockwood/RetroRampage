@@ -50,13 +50,20 @@ func setUpAudio() {
 }
 
 class ViewController: UIViewController {
-    private let imageView = UIImageView()
-    private let panGesture = UIPanGestureRecognizer()
+    private let contentView = ContentView()
     private let tapGesture = UITapGestureRecognizer()
     private let textures = loadTextures()
     private var game = Game(levels: loadLevels(), font: loadFont())
     private var lastFrameTime = CACurrentMediaTime()
     private var lastFiredTime = 0.0
+
+    private var imageView: UIImageView {
+        return contentView.imageView
+    }
+
+    override func loadView() {
+        self.view = contentView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,13 +73,9 @@ class ViewController: UIViewController {
         }
 
         setUpAudio()
-        setUpImageView()
 
         let displayLink = CADisplayLink(target: self, selector: #selector(update))
         displayLink.add(to: .main, forMode: .common)
-
-        view.addGestureRecognizer(panGesture)
-        panGesture.delegate = self
 
         view.addGestureRecognizer(tapGesture)
         tapGesture.addTarget(self, action: #selector(fire))
@@ -93,28 +96,13 @@ class ViewController: UIViewController {
         return true
     }
 
-    private var inputVector: Vector {
-        switch panGesture.state {
-        case .began, .changed:
-            let translation = panGesture.translation(in: view)
-            var vector = Vector(x: Double(translation.x), y: Double(translation.y))
-            vector /= max(joystickRadius, vector.length)
-            panGesture.setTranslation(CGPoint(
-                x: vector.x * joystickRadius,
-                y: vector.y * joystickRadius
-            ), in: view)
-            return vector
-        default:
-            return Vector(x: 0, y: 0)
-        }
-    }
-
     @objc func update(_ displayLink: CADisplayLink) {
         let timeStep = min(maximumTimeStep, displayLink.timestamp - lastFrameTime)
-        let inputVector = self.inputVector
-        let rotation = inputVector.x * game.world.player.turningSpeed * worldTimeStep
+        let leftInputVector = contentView.leftJoystickInputVector
+        let rightInputVector = contentView.rightJoystickInputVector
+        let rotation = rightInputVector.x * game.world.player.turningSpeed * worldTimeStep
         var input = Input(
-            speed: -inputVector.y,
+            speed: Vector(x: leftInputVector.x, y: -leftInputVector.y),
             rotation: Rotation(sine: sin(rotation), cosine: cos(rotation)),
             isFiring: lastFiredTime > lastFrameTime
         )
@@ -141,18 +129,6 @@ class ViewController: UIViewController {
 
     @objc func fire(_ gestureRecognizer: UITapGestureRecognizer) {
         lastFiredTime = CACurrentMediaTime()
-    }
-
-    func setUpImageView() {
-        view.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        imageView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .black
-        imageView.layer.magnificationFilter = .nearest
     }
 }
 
@@ -185,5 +161,78 @@ extension ViewController: GameDelegate {
 
     func clearSounds() {
         SoundManager.shared.clearAll()
+    }
+}
+
+class ContentView: UIView {
+    
+    private(set) lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .black
+        imageView.layer.magnificationFilter = .nearest
+        return imageView
+    }()
+    
+    private let leftJoyStick = UIView()
+    private let rightJoystick = UIView()
+    
+    let leftGestureRecognizer = UIPanGestureRecognizer()
+    let rightGestureRecognizer = UIPanGestureRecognizer()
+    
+    var leftJoystickInputVector: Vector {
+        switch leftGestureRecognizer.state {
+        case .began, .changed:
+            let translation = leftGestureRecognizer.translation(in: self)
+            var vector = Vector(x: Double(translation.x), y: Double(translation.y))
+            vector /= max(joystickRadius, vector.length)
+            leftGestureRecognizer.setTranslation(CGPoint(
+                x: vector.x * joystickRadius,
+                y: vector.y * joystickRadius
+            ), in: self)
+            return vector
+        default:
+            return Vector(x: 0, y: 0)
+        }
+    }
+    
+    var rightJoystickInputVector: Vector {
+        switch rightGestureRecognizer.state {
+        case .began, .changed:
+            let translation = rightGestureRecognizer.translation(in: self)
+            var vector = Vector(x: Double(translation.x), y: Double(translation.y))
+            vector /= max(joystickRadius, vector.length)
+            rightGestureRecognizer.setTranslation(CGPoint(
+                x: vector.x * joystickRadius,
+                y: vector.y * joystickRadius
+            ), in: self)
+            return vector
+        default:
+            return Vector(x: 0, y: 0)
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addSubview(imageView)
+        addSubview(leftJoyStick)
+        addSubview(rightJoystick)
+        
+        leftJoyStick.addGestureRecognizer(leftGestureRecognizer)
+        rightJoystick.addGestureRecognizer(rightGestureRecognizer)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        let size = CGSize(width: bounds.width / 2, height: bounds.height)
+        leftJoyStick.frame = CGRect(origin: .zero, size: size)
+        rightJoystick.frame = CGRect(origin: CGPoint(x: size.width, y: 0), size: size)
+        imageView.frame = bounds
     }
 }
