@@ -13,60 +13,43 @@ private let fizzle = (0 ..< 10000).shuffled()
 public struct Renderer {
     public private(set) var bitmap: Bitmap
     private let textures: Textures
-    public var safeArea: Rect
 
     public init(width: Int, height: Int, textures: Textures) {
         self.bitmap = Bitmap(width: width, height: height, color: .black)
         self.textures = textures
-        self.safeArea = Rect(min: Vector(x: 0, y: 0), max: bitmap.size)
     }
 }
 
 public extension Renderer {
     mutating func draw(_ game: Game) {
-        switch game.state {
-        case .title, .starting:
-            // Background
-            let background = textures[.titleBackground]
-            let backgroundScale = bitmap.size.y / background.size.y
-            let backgroundSize = background.size * backgroundScale
-            let backgroundPosition = (bitmap.size - backgroundSize) / 2
-            bitmap.drawImage(background, at: backgroundPosition, size: backgroundSize)
-            
-            // Logo
-            let logo = textures[.titleLogo]
-            let logoScale = bitmap.size.y / logo.size.y / 2
-            let logoSize = logo.size * logoScale
-            let logoPosition = Vector(x: (bitmap.size.x - logoSize.x) / 2, y: bitmap.size.y * 0.15)
-            bitmap.drawImage(logo, at: logoPosition, size: logoSize)
+        // UI
+        if let ui = game.background {
+            draw(ui, at: .zero, scale: 1)
+        }
 
-            // Text
-            let textScale = bitmap.size.y / 64
-            let font = textures[game.font.texture]
-            let charSize = Vector(x: Double(font.width / game.font.characters.count), y: font.size.y)
-            let textWidth = charSize.x * Double(game.titleText.count) * textScale
-            var offset = Vector(x: (bitmap.size.x - textWidth) / 2, y: bitmap.size.y * 0.75)
-            for char in game.titleText {
-                let index = game.font.characters.firstIndex(of: String(char)) ?? 0
-                let step = Int(charSize.x)
-                let xRange = index * step ..< (index + 1) * step
-                bitmap.drawImage(
-                    font,
-                    xRange: xRange,
-                    at: offset,
-                    size: charSize * textScale,
-                    tint: .yellow
-                )
-                offset.x += charSize.x * textScale
-            }
-        case .playing:
+        // Game
+        if [.playing, .paused, .quitting].contains(game.state) {
             draw(game.world)
-            draw(game.hud)
+        }
 
-            // Effects
-            for effect in game.world.effects {
-                draw(effect)
-            }
+        // HUD
+        if let hud = game.hud {
+            draw(hud, at: .zero, scale: 1)
+        }
+
+        // Effects
+        for effect in game.world.effects {
+            draw(effect)
+        }
+
+        // Overlay
+        if let effect = game.overlay {
+            draw(effect)
+        }
+
+        // Menu
+        if let ui = game.menu {
+            draw(ui, at: .zero, scale: 1)
         }
 
         // Transition
@@ -183,59 +166,6 @@ public extension Renderer {
         }
     }
 
-    mutating func draw(_ hud: HUD) {
-        // Player weapon
-        let weaponTexture = textures[hud.playerWeapon]
-        let weaponScale = bitmap.size.y / weaponTexture.size.y
-        let weaponSize = weaponTexture.size * weaponScale
-        bitmap.drawImage(weaponTexture, at: (bitmap.size - weaponSize) / 2, size: weaponSize)
-
-        // Crosshair
-        let crosshair = textures[.crosshair]
-        let hudScale = bitmap.size.y / 64
-        let crosshairSize = crosshair.size * hudScale
-        bitmap.drawImage(crosshair, at: (bitmap.size - crosshairSize) / 2, size: crosshairSize)
-
-        // Health icon
-        let healthIcon = textures[.healthIcon]
-        var offset = safeArea.min + Vector(x: 1, y: 1) * hudScale
-        bitmap.drawImage(healthIcon, at: offset, size: healthIcon.size * hudScale)
-        offset.x += healthIcon.size.x * hudScale
-
-        // Health
-        let font = textures[hud.font.texture]
-        let charSize = Vector(x: Double(font.width / hud.font.characters.count), y: font.size.y)
-        let healthTint = hud.healthTint
-        for char in hud.healthString {
-            let index = hud.font.characters.firstIndex(of: String(char)) ?? 0
-            let step = Int(charSize.x)
-            let xRange = index * step ..< (index + 1) * step
-            bitmap.drawImage(
-                font,
-                xRange: xRange,
-                at: offset,
-                size: charSize * hudScale,
-                tint: healthTint
-            )
-            offset.x += charSize.x * hudScale
-        }
-
-        // Ammunition
-        offset.x = safeArea.max.x
-        for char in hud.ammoString.reversed() {
-            let index = hud.font.characters.firstIndex(of: String(char)) ?? 0
-            let step = Int(charSize.x)
-            let xRange = index * step ..< (index + 1) * step
-            offset.x -= charSize.x * hudScale
-            bitmap.drawImage(font, xRange: xRange, at: offset, size: charSize * hudScale)
-        }
-
-        // Weapon icon
-        let weaponIcon = textures[hud.weaponIcon]
-        offset.x -= weaponIcon.size.x * hudScale
-        bitmap.drawImage(weaponIcon, at: offset, size: weaponIcon.size * hudScale)
-    }
-
     mutating func draw(_ effect: Effect) {
         switch effect.type {
         case .fadeIn:
@@ -255,5 +185,39 @@ public extension Renderer {
                 }
             }
         }
+    }
+
+    mutating func draw(_ view: View, at offset: Vector, scale: Double) {
+        let scale = scale * view.scale
+        if let image = view as? Image {
+            draw(image, at: offset, scale: scale)
+        }
+        view.subviews.forEach {
+            draw($0, at: offset + view.position * scale, scale: scale)
+        }
+    }
+
+    mutating func draw(_ image: Image, at offset: Vector, scale: Double) {
+        let bitmap = textures[image.texture]
+        var rect = Rect(position: image.position, size: image.size)
+        switch image.scalingMode {
+        case .aspectFit:
+            rect = Rect(size: bitmap.size).aspectFit(rect)
+        case .aspectFill:
+            rect = Rect(size: bitmap.size).aspectFill(rect)
+        case .center(let scale):
+            rect = Rect(center: rect.center, size: bitmap.size * scale)
+        case .stretch:
+            break
+        }
+        rect.min *= scale
+        rect.max *= scale
+        self.bitmap.drawImage(
+            bitmap,
+            rect: image.clipRect,
+            at: offset + rect.min,
+            size: rect.size,
+            tint: image.tint
+        )
     }
 }

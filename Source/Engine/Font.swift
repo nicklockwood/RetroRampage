@@ -9,4 +9,5 @@
 public struct Font: Decodable {
     public let texture: Texture
     public let characters: [String]
+    public let glyphSize: Vector
 }

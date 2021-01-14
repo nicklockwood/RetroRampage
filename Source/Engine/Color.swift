@@ -22,6 +22,12 @@ public extension Color {
         return a == 255
     }
 
+    func withAlpha(_ alpha: UInt8) -> Color {
+        var color = self
+        color.a = alpha
+        return color
+    }
+
     static let clear = Color(r: 0, g: 0, b: 0, a: 0)
     static let black = Color(r: 0, g: 0, b: 0)
     static let white = Color(r: 255, g: 255, b: 255)

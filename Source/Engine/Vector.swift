@@ -6,7 +6,7 @@
 //  Copyright © 2019 Nick Lockwood. All rights reserved.
 //
 
-public struct Vector: Hashable {
+public struct Vector: Hashable, Decodable {
     public var x, y: Double
 
     public init(x: Double, y: Double) {
@@ -16,6 +16,15 @@ public struct Vector: Hashable {
 }
 
 public extension Vector {
+    static let zero = Vector(x: 0, y: 0)
+
+    init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        let x = try container.decode(Double.self)
+        let y = try container.decode(Double.self)
+        self.init(x: x, y: y)
+    }
+
     var orthogonal: Vector {
         return Vector(x: -y, y: x)
     }

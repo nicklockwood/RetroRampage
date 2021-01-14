@@ -56,7 +56,7 @@ class ViewController: UIViewController {
     private let textures = loadTextures()
     private var game = Game(levels: loadLevels(), font: loadFont())
     private var lastFrameTime = CACurrentMediaTime()
-    private var lastFiredTime = 0.0
+    private var press: Vector?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         panGesture.delegate = self
 
         view.addGestureRecognizer(tapGesture)
-        tapGesture.addTarget(self, action: #selector(fire))
+        tapGesture.addTarget(self, action: #selector(tap))
         tapGesture.delegate = self
 
         game.delegate = self
@@ -116,31 +116,37 @@ class ViewController: UIViewController {
         var input = Input(
             speed: -inputVector.y,
             rotation: Rotation(sine: sin(rotation), cosine: cos(rotation)),
-            isFiring: lastFiredTime > lastFrameTime
+            isFiring: press != nil,
+            press: press
         )
         lastFrameTime = displayLink.timestamp
-        lastFiredTime = min(lastFiredTime, lastFrameTime)
+        press = nil
+
+        let width = Int(imageView.bounds.width), height = Int(imageView.bounds.height)
+        let size = Vector(x: Double(width), y: Double(height))
+        let insets = view.safeAreaInsets
+        let safeArea = Rect(
+            min: Vector(x: Double(insets.left), y: Double(insets.top)),
+            max: size - Vector(x: Double(insets.right), y: Double(insets.bottom))
+        )
+        let window = Window(width: width, height: height, safeArea: safeArea)
 
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
-            game.update(timeStep: timeStep / worldSteps, input: input)
+            game.update(timeStep: timeStep / worldSteps, input: input, window: window)
             input.isFiring = false
+            input.press = nil
         }
 
-        let width = Int(imageView.bounds.width), height = Int(imageView.bounds.height)
         var renderer = Renderer(width: width, height: height, textures: textures)
-        let insets = self.view.safeAreaInsets
-        renderer.safeArea = Rect(
-            min: Vector(x: Double(insets.left), y: Double(insets.top)),
-            max: renderer.bitmap.size - Vector(x: Double(insets.left), y: Double(insets.bottom))
-        )
         renderer.draw(game)
-
+        
         imageView.image = UIImage(bitmap: renderer.bitmap)
     }
 
-    @objc func fire(_ gestureRecognizer: UITapGestureRecognizer) {
-        lastFiredTime = CACurrentMediaTime()
+    @objc func tap(_ gestureRecognizer: UITapGestureRecognizer) {
+        let location = gestureRecognizer.location(in: view)
+        press = Vector(x: Double(location.x), y: Double(location.y))
     }
 
     func setUpImageView() {
