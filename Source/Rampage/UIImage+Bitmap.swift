@@ -10,7 +10,7 @@ import UIKit
 import Engine
 import Renderer
 
-extension UIImage {
+public extension UIImage {
     convenience init?(bitmap: Bitmap) {
         let alphaInfo = CGImageAlphaInfo.premultipliedLast
         let bytesPerPixel = MemoryLayout<Color>.size
@@ -42,7 +42,7 @@ extension UIImage {
     }
 }
 
-extension Bitmap {
+public extension Bitmap {
     init?(image: UIImage) {
         guard let cgImage = image.cgImage else {
             return nil
