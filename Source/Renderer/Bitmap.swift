@@ -75,36 +75,28 @@ public extension Bitmap {
 
     mutating func drawColumn(
         _ sourceX: Int,
+        range: Range<Int>? = nil,
         of source: Bitmap,
         at point: Vector,
         height: Double,
         tint: Color? = nil
     ) {
         let start = Int(point.y), end = Int((point.y + height).rounded(.up))
-        let stepY = Double(source.height) / height
+        let range = range ?? 0 ..< source.height
+        let stepY = Double(range.count) / height
         let offset = Int(point.x) * self.height
-        if source.isOpaque {
-            for y in max(0, start) ..< min(self.height, end) {
-                let sourceY = max(0, Double(y) - point.y) * stepY
-                var sourceColor = source[sourceX, Int(sourceY)]
-                if let tint = tint {
-                    sourceColor.r = UInt8(UInt16(sourceColor.r) * UInt16(tint.r) / 255)
-                    sourceColor.g = UInt8(UInt16(sourceColor.g) * UInt16(tint.g) / 255)
-                    sourceColor.b = UInt8(UInt16(sourceColor.b) * UInt16(tint.b) / 255)
-                    sourceColor.a = UInt8(UInt16(sourceColor.a) * UInt16(tint.a) / 255)
-                }
-                pixels[offset + y] = sourceColor
+        for y in max(0, start) ..< min(self.height, end) {
+            let sourceY = Int(max(0, Double(y) - point.y) * stepY) + range.lowerBound
+            var sourceColor = source[sourceX, Int(sourceY)]
+            if let tint = tint {
+                sourceColor.r = UInt8(UInt16(sourceColor.r) * UInt16(tint.r) / 255)
+                sourceColor.g = UInt8(UInt16(sourceColor.g) * UInt16(tint.g) / 255)
+                sourceColor.b = UInt8(UInt16(sourceColor.b) * UInt16(tint.b) / 255)
+                sourceColor.a = UInt8(UInt16(sourceColor.a) * UInt16(tint.a) / 255)
             }
-        } else {
-            for y in max(0, start) ..< min(self.height, end) {
-                let sourceY = max(0, Double(y) - point.y) * stepY
-                var sourceColor = source[sourceX, Int(sourceY)]
-                if let tint = tint {
-                    sourceColor.r = UInt8(UInt16(sourceColor.r) * UInt16(tint.r) / 255)
-                    sourceColor.g = UInt8(UInt16(sourceColor.g) * UInt16(tint.g) / 255)
-                    sourceColor.b = UInt8(UInt16(sourceColor.b) * UInt16(tint.b) / 255)
-                    sourceColor.a = UInt8(UInt16(sourceColor.a) * UInt16(tint.a) / 255)
-                }
+            if source.isOpaque {
+                pixels[offset + y] = sourceColor
+            } else {
                 blendPixel(at: offset + y, with: sourceColor)
             }
         }
@@ -124,6 +116,26 @@ public extension Bitmap {
             let sourceX = Int(max(0, Double(x) - point.x) * stepX) + xRange.lowerBound
             let outputPosition = Vector(x: Double(x), y: point.y)
             drawColumn(sourceX, of: source, at: outputPosition, height: size.y, tint: tint)
+        }
+    }
+
+    mutating func drawImage(
+        _ source: Bitmap,
+        rect: Rect?,
+        at point: Vector,
+        size: Vector,
+        tint: Color? = nil
+    ) {
+        let rect = rect ?? Rect(min: .zero, max: source.size)
+        let xRange = Int(rect.min.x) ..< Int(rect.max.x.rounded(.up))
+        let yRange = Int(rect.min.y) ..< Int(rect.max.y.rounded(.up))
+        let start = Int(point.x), end = Int(point.x + size.x)
+        let stepX = Double(xRange.count) / size.x
+        for x in max(0, start) ..< max(0, start, min(width, end)) {
+           let sourceX = Int(max(0, Double(x) - point.x) * stepX) + xRange.lowerBound
+           let outputPosition = Vector(x: Double(x), y: point.y)
+           drawColumn(sourceX, range: yRange, of: source, at: outputPosition,
+                      height: size.y, tint: tint)
         }
     }
 

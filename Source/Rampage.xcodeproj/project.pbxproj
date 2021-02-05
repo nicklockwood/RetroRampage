@@ -38,6 +38,7 @@
 		016E41BD228E9A5E00ACF137 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 016E41BB228E9A5E00ACF137 /* LaunchScreen.storyboard */; };
 		016E41D0228E9A8600ACF137 /* Engine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 016E41C9228E9A8600ACF137 /* Engine.framework */; };
 		016E41D1228E9A8600ACF137 /* Engine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 016E41C9228E9A8600ACF137 /* Engine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01919CB8244100B200AF6B3C /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01919CB7244100B200AF6B3C /* Window.swift */; };
 		0199F56223E1A517003E3F08 /* monsterSwipe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0199F55523E1A517003E3F08 /* monsterSwipe.mp3 */; };
 		0199F56323E1A517003E3F08 /* pistolFire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0199F55623E1A517003E3F08 /* pistolFire.mp3 */; };
 		0199F56423E1A517003E3F08 /* wallSlide.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0199F55723E1A517003E3F08 /* wallSlide.mp3 */; };
@@ -66,6 +67,7 @@
 		01D09B0B22A7F7570052745A /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0A22A7F7570052745A /* Texture.swift */; };
 		01D0F5D922F80E1600682CA1 /* RampageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F5D822F80E1600682CA1 /* RampageTests.swift */; };
 		01D0F5F122FF095E00682CA1 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F5F022FF095E00682CA1 /* Door.swift */; };
+		01D9366125B0559B00AD7F6F /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FDEFD2243DBDD2002B476D /* View.swift */; };
 		01DD25AA244FA74900D00FE5 /* Font.json in Resources */ = {isa = PBXBuildFile; fileRef = 01DD25A9244FA74900D00FE5 /* Font.json */; };
 		01DD25AC244FA85E00D00FE5 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DD25AB244FA85E00D00FE5 /* Font.swift */; };
 		01E3963A2342758D00D02236 /* Pushwall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E396392342758D00D02236 /* Pushwall.swift */; };
@@ -149,6 +151,7 @@
 		016E41BE228E9A5E00ACF137 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		016E41C9228E9A8600ACF137 /* Engine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Engine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		016E41CC228E9A8600ACF137 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01919CB7244100B200AF6B3C /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 		0199F55523E1A517003E3F08 /* monsterSwipe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = monsterSwipe.mp3; sourceTree = "<group>"; };
 		0199F55623E1A517003E3F08 /* pistolFire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pistolFire.mp3; sourceTree = "<group>"; };
 		0199F55723E1A517003E3F08 /* wallSlide.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wallSlide.mp3; sourceTree = "<group>"; };
@@ -186,6 +189,7 @@
 		01DD25AB244FA85E00D00FE5 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		01E396392342758D00D02236 /* Pushwall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pushwall.swift; sourceTree = "<group>"; };
 		01EDA5DA2444DC2B00FC1795 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		01FDEFD2243DBDD2002B476D /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,7 +316,9 @@
 				01D09AFE22A48E990052745A /* Tilemap.swift */,
 				012A0C4E22C96E1F0068E8EF /* Thing.swift */,
 				01D09AF822A484B10052745A /* Vector.swift */,
+				01FDEFD2243DBDD2002B476D /* View.swift */,
 				013D492623EE17C000763FCA /* Weapon.swift */,
+				01919CB7244100B200AF6B3C /* Window.swift */,
 				01ADC63F22B9846B00DC8AAD /* World.swift */,
 				016E41CC228E9A8600ACF137 /* Info.plist */,
 			);
@@ -454,7 +460,7 @@
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = "Nick Lockwood";
 				TargetAttributes = {
 					0108A65623F4D84C0075E1AF = {
@@ -580,6 +586,7 @@
 				01D09B0B22A7F7570052745A /* Texture.swift in Sources */,
 				01EDA5DB2444DC2C00FC1795 /* Game.swift in Sources */,
 				0159A3F523DEF636001EEB81 /* Pickup.swift in Sources */,
+				01919CB8244100B200AF6B3C /* Window.swift in Sources */,
 				015A23C9230586E3004CBB78 /* Switch.swift in Sources */,
 				01D09AFF22A48E990052745A /* Tilemap.swift in Sources */,
 				01D09AFD22A4873B0052745A /* Rect.swift in Sources */,
@@ -602,6 +609,7 @@
 				01D09B0322A4958E0052745A /* Input.swift in Sources */,
 				01DD25AC244FA85E00D00FE5 /* Font.swift in Sources */,
 				012A0CA222D7AD0A0068E8EF /* Animation.swift in Sources */,
+				01D9366125B0559B00AD7F6F /* View.swift in Sources */,
 				01D09B0522A5C9DB0052745A /* Ray.swift in Sources */,
 				01E3963A2342758D00D02236 /* Pushwall.swift in Sources */,
 				013BBC122470B3F200F14BBC /* RNG.swift in Sources */,
@@ -744,6 +752,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -805,6 +814,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

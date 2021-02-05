@@ -33,4 +33,6 @@ public enum Texture: String, CaseIterable, Decodable {
     case pistolIcon, shotgunIcon
     case font
     case titleBackground, titleLogo
+    case pauseButton
+    case paused
 }
