@@ -66,6 +66,8 @@
 		01D09B0B22A7F7570052745A /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D09B0A22A7F7570052745A /* Texture.swift */; };
 		01D0F5D922F80E1600682CA1 /* RampageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F5D822F80E1600682CA1 /* RampageTests.swift */; };
 		01D0F5F122FF095E00682CA1 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D0F5F022FF095E00682CA1 /* Door.swift */; };
+		01D4DF2325CAE9540081DEFB /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4DF2225CAE9540081DEFB /* MetalView.swift */; };
+		01D4DF2B25CAF0080081DEFB /* MetalView.metal in Sources */ = {isa = PBXBuildFile; fileRef = 01D4DF2A25CAF0080081DEFB /* MetalView.metal */; };
 		01DD25AA244FA74900D00FE5 /* Font.json in Resources */ = {isa = PBXBuildFile; fileRef = 01DD25A9244FA74900D00FE5 /* Font.json */; };
 		01DD25AC244FA85E00D00FE5 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DD25AB244FA85E00D00FE5 /* Font.swift */; };
 		01E3963A2342758D00D02236 /* Pushwall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E396392342758D00D02236 /* Pushwall.swift */; };
@@ -182,6 +184,9 @@
 		01D0F5D822F80E1600682CA1 /* RampageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RampageTests.swift; sourceTree = "<group>"; };
 		01D0F5DA22F80E1600682CA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01D0F5F022FF095E00682CA1 /* Door.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Door.swift; sourceTree = "<group>"; };
+		01D4DF2225CAE9540081DEFB /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		01D4DF2A25CAF0080081DEFB /* MetalView.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = MetalView.metal; sourceTree = "<group>"; };
+		01D4DF3525CAF4230081DEFB /* MetalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalView.h; sourceTree = "<group>"; };
 		01DD25A9244FA74900D00FE5 /* Font.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Font.json; sourceTree = "<group>"; };
 		01DD25AB244FA85E00D00FE5 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		01E396392342758D00D02236 /* Pushwall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pushwall.swift; sourceTree = "<group>"; };
@@ -270,6 +275,9 @@
 				016E41B4228E9A5B00ACF137 /* ViewController.swift */,
 				01D09AF422A482450052745A /* UIImage+Bitmap.swift */,
 				0199F57323E242D4003E3F08 /* SoundManager.swift */,
+				01D4DF2225CAE9540081DEFB /* MetalView.swift */,
+				01D4DF2A25CAF0080081DEFB /* MetalView.metal */,
+				01D4DF3525CAF4230081DEFB /* MetalView.h */,
 				016E41B6228E9A5B00ACF137 /* Main.storyboard */,
 				01D09B0022A493A70052745A /* Levels.json */,
 				01DD25A9244FA74900D00FE5 /* Font.json */,
@@ -454,7 +462,7 @@
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = "Nick Lockwood";
 				TargetAttributes = {
 					0108A65623F4D84C0075E1AF = {
@@ -564,9 +572,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01D4DF2325CAE9540081DEFB /* MetalView.swift in Sources */,
 				01D09AF522A482450052745A /* UIImage+Bitmap.swift in Sources */,
 				0199F57423E242D4003E3F08 /* SoundManager.swift in Sources */,
 				016E41B5228E9A5B00ACF137 /* ViewController.swift in Sources */,
+				01D4DF2B25CAF0080081DEFB /* MetalView.metal in Sources */,
 				016E41B3228E9A5B00ACF137 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -744,6 +754,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -769,7 +780,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -805,6 +816,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -824,7 +836,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -848,6 +860,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.charcoaldesign.Rampage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = Rampage/MetalView.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -867,6 +880,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.charcoaldesign.Rampage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = Rampage/MetalView.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
