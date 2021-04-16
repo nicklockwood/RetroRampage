@@ -497,13 +497,13 @@ Now, in the `Monster.update()` method, modify the state machine again to swap th
 ```swift
 switch state {
 case .idle:
-    if monster.canSeePlayer(in: self) {
+    if canSeePlayer(in: world) {
         state = .chasing
         animation = .monsterWalk
     }
     velocity = Vector(x: 0, y: 0)
 case .chasing:
-    guard monster.canSeePlayer(in: self) else {
+    guard canSeePlayer(in: world) else {
         state = .idle
         animation = .monsterIdle
         break
