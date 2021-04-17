@@ -46,7 +46,7 @@ public enum PickupType {
 public struct Pickup: Actor {
     public let type: PickupType
     public let radius: Double = 0.4
-    public let position: Vector
+    public var position: Vector
 
     public init(type: PickupType, position: Vector) {
         self.type = type
@@ -59,7 +59,7 @@ public extension Pickup {
 }
 ```
 
-We'll assume that pickups cannot move or change size, so their position and radius are constant. It's also reasonable to assume all pickups will have similar properties and behavior, so we've added a `type` field so that we can re-use the `Pickup` struct for multiple pickup types.
+It's reasonable to assume all pickups will have similar properties and behavior, so we've added a `type` field so that we can re-use the `Pickup` struct for multiple pickup types.
 
 With the `Monster` type it was important that the radius was small enough to accurately reflect collisions, but large enough that the sprite wouldn't clip into the walls. In this case the pickup will always be centered in its tile, so clipping is not much of a concern. We've chosen a large-ish radius mainly because it will make it easier for the player to, well... *pick it up*.
 
